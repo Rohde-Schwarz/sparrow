@@ -68,5 +68,8 @@ module Dummy
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Setting for testing irrelevant secret key base
+    config.secret_key_base = 'secret'
   end
 end
