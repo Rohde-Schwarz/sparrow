@@ -85,5 +85,17 @@ describe "camel caser middleware for Rails", type: :rails do
         expect(subject['fake_key']).to eq false
       end
     end
+
+    context 'convert elements if root element is an array instead of hash' do
+      before  { get '/array_of_elements' }
+      subject { MultiJson.load(last_response.body) }
+
+      it 'should return an array as root element' do
+        expect(subject.class).to eq Array
+        expect(subject.first).to_not have_key("fake_key")
+        expect(subject.first).to have_key("fakeKey")
+      end
+
+    end
   end
 end

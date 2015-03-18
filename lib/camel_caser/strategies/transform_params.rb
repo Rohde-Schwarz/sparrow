@@ -17,10 +17,14 @@ module CamelCaser
         self.key_transformation_strategy = key_transformation_strategy
       end
 
-      def transform(json_params)
-        return json_params unless json_params.is_a?(Hash)
-        json_params.deep_transform_keys do |key|
-          key_transformation_strategy.transform_key(key)
+      def transform(collection)
+        case collection
+        when Array
+          collection.map { |element| transform(element) }
+        when Hash
+          collection.deep_transform_keys do |key|
+            key_transformation_strategy.transform_key(key)
+          end
         end
       end
 

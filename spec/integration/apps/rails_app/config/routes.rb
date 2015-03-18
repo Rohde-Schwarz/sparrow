@@ -51,6 +51,7 @@ Dummy::Application.routes.draw do
   root :to => 'welcome#index', defaults: { format: 'json' }
   post '/posts' => 'welcome#posts', defaults: {format: 'json'}
   get '/welcome' => 'welcome#show', default: {format: 'json'}
+  get '/array_of_elements' => 'welcome#array_of_elements', default: {format: 'json'}
   get '/ignore' => 'welcome#ignore', default: {format: 'json'}
 
   # See how all your routes lay out with "rake routes"

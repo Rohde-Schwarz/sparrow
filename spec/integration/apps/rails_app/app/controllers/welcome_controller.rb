@@ -15,6 +15,13 @@ class WelcomeController < ApplicationController
     render json: {keys: extract_keys}
   end
 
+  def array_of_elements
+    render json:  [
+                    {fake_key: "foo"},
+                    {fake_key: "bar"}
+                  ]
+  end
+
   private
   def extract_keys
     not_acceptable_keys = %w(controller format default action welcome)

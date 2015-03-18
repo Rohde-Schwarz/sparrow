@@ -17,14 +17,7 @@ module CamelCaser
     end
 
     def json_body
-      json = transform_params
-      json = if json.is_a?(Array)
-               json.first
-             elsif json.is_a?(Hash)
-               MultiJson.dump(json)
-             else
-               json
-             end
+      json = parsable_json_string(transform_params)
       MultiJson.load(json)
       json
     rescue MultiJson::ParseError
@@ -48,6 +41,14 @@ module CamelCaser
                     end
       return MultiJson.load(json_params) if json_params.is_a?(String)
       json_params
+    end
+
+    def parsable_json_string(transformable_params)
+      if [Hash, Array].include? transformable_params.class
+        MultiJson.dump(transformable_params)
+      else
+        transformable_params
+      end
     end
   end
 end
