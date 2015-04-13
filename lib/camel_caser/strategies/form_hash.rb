@@ -19,6 +19,7 @@ module CamelCaser
       end
 
       def handle
+        super
         handle_form_hash
       end
 

@@ -4,8 +4,6 @@ require 'camel_caser/strategies/json_format_strategies/json_format_strategy'
 module CamelCaser
   module Transformable
     def transform_params
-      transform_params          = CamelCaser::Strategies::TransformParams
-      transform_params_strategy = transform_params.new(transform_strategy)
       transform_params_strategy.transform(ensure_json)
     end
 
@@ -14,6 +12,10 @@ module CamelCaser
           CamelCaser.configuration.default_json_key_transformation_strategy(type)
       strategy = json_format || default
       strategy.to_sym
+    end
+
+    def handle
+      transform_query_string if type == :request
     end
 
     def json_body
@@ -50,5 +52,17 @@ module CamelCaser
         transformable_params
       end
     end
+
+    def transform_params_strategy
+      transform_params = CamelCaser::Strategies::TransformParams
+      transform_params.new(transform_strategy)
+    end
+
+    def transform_query_string
+      env_query_hash      = Rack::Utils.parse_nested_query(env['QUERY_STRING'])
+      transformed_hash    = transform_params_strategy.transform(env_query_hash)
+      env['QUERY_STRING'] = transformed_hash.to_param
+    end
+
   end
 end

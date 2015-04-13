@@ -18,6 +18,7 @@ module CamelCaser
       end
 
       def handle
+        super
         handle_raw_rack
       end
 

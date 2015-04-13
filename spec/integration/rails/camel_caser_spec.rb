@@ -49,6 +49,23 @@ describe "camel caser middleware for Rails", type: :rails do
         end
       end
     end
+
+    context 'converts GET url parameters' do
+      before  do
+        get '/upcase_first_name?userOptions[firstName]=susi',
+            {},
+            {'request-json-format'  => 'underscore'}
+      end
+      subject { MultiJson.load(last_response.body) }
+
+      it 'should return an array as root element' do
+        expect(subject).to_not have_key("user_options")
+        expect(subject).to have_key("userOptions")
+        expect(subject["userOptions"]).to have_key("firstName")
+        expect(subject["userOptions"]["firstName"]).to eq("SUSI")
+      end
+    end
+
   end
 
   context "accept header is not given" do

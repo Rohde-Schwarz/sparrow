@@ -22,6 +22,13 @@ class WelcomeController < ApplicationController
                   ]
   end
 
+  def upcase_first_name
+    name = params[:user_options][:first_name]
+    params[:user_options][:first_name] = name.upcase
+
+    render json: params
+  end
+
   private
   def extract_keys
     not_acceptable_keys = %w(controller format default action welcome)
