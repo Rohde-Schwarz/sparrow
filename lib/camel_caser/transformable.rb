@@ -15,7 +15,7 @@ module CamelCaser
     end
 
     def handle
-      transform_query_string if type == :request
+      transform_query_string
     end
 
     def json_body
