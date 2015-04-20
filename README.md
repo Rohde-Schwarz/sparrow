@@ -1,17 +1,12 @@
 # CamelCaser
 
-A POC to have a Rack middleware parsing the params keys into underscore if a
-request header is configured properly:
-
-```
- {'json-format': 'underscore'}  
-```
+A Rack middleware for converting the params keys and JSON response keys of a Rack application.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'camel_caser', github: 'dsci/camel_caser'
+    gem 'camel_caser'
 
 And then execute:
 
@@ -31,25 +26,33 @@ require 'camel_caser'
 use CamelCaser::Middleware
 ```
 
+## Configuration
+
+There are various configuration options as well as HTTP headers available to
+make the middleware act as you want it to.
+
+in your configuration file (such as application.rb if you are using Rails)
+
+```
+CamelCaser.configure do |config|
+  config.excluded_routes = [
+    Regexp.new('api/model/certificates')
+  ]
+end
+```
+
+There are several options available
+
+| Option | Example | Meaning |
+|--------|---------|----------------------|
+| **excluded_routes** | see above | An Array of Strings an/or Regexps defining which paths should not be touched by the middleware. The entries should matchs paths for your application. They should *not* start with a leading slash. |
+|**default_json_request_key_transformation_strategy**|underscore|Defines how the middleware should treat incoming parameters via Request. Which means how they get tranformed, i.e. defining _underscore_ here means that incoming parameters get underscore. Possible values are _underscore_ and _camelize_|
+|**default_json_response_key_transformation_strategy**|camelize|Same as *default_json_request_key_transformation_strategy, but for responses. I.e. this defines to which format the keys get transformed when the response gets sent.
+|**json_request_format_header**|request-json-format|Defines the HTTP Header key which sets the request transformation strategy as in *default_json_request_key_transformation_strategy*. This definition has higher priority than the default definition. Possible values for this Header are the same as for *default_json_request_key_transformation_strategy*|
+|**json_response_format_header**|response-json-format|Same as *json_request_format_header*, but for the response handling|
+
+
 ## Tests
 
-You have to run Rack and Rails tests separate:
-
-```
-rspec spec/rack
-```
-
-and
-
-```
-rspec spec/rails
-```
-
-
-## Contributing
-
-1. Fork it ( http://github.com/dsci/camel_caser/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+Just run `rspec` and you are off to go. This runs the whole suite including
+specs for unit- & integrationtests for Rails and Rack.
