@@ -10,7 +10,7 @@ module CamelCaser
       end
 
       def params
-        ret = @params || @env['rack.input'].send(:readlines).join
+        ret = @params || @env['rack.input'].send(:read)
         @env['rack.input'].rewind
         ret
       end

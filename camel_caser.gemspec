@@ -28,8 +28,9 @@ supported.
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec", '~> 3'
   spec.add_development_dependency "rspec-its"
+  spec.add_development_dependency "rack", "1.4.5"
   spec.add_development_dependency "rack-test"
   spec.add_development_dependency "multi_json"
-  spec.add_development_dependency "rails", ">= 3.2.17"
-  spec.add_development_dependency "activeresource", ">= 3.2.17"
+  spec.add_development_dependency "rails", "3.2.21"
+  spec.add_development_dependency "activeresource", "3.2.21"
 end
