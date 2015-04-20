@@ -4,7 +4,8 @@ module CamelCaser
                   :json_response_format_header,
                   :excluded_routes,
                   :default_json_request_key_transformation_strategy,
-                  :default_json_response_key_transformation_strategy
+                  :default_json_response_key_transformation_strategy,
+                  :default_ignore_all_uppercase_keys
 
     def initialize
       @json_request_format_header                        = 'request-json-format'
@@ -12,6 +13,7 @@ module CamelCaser
       @excluded_routes                                   = []
       @default_json_request_key_transformation_strategy  = :camelize
       @default_json_response_key_transformation_strategy = :camelize
+      @default_ignore_all_uppercase_keys                 = :true
     end
 
     def json_format_header(type)

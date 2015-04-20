@@ -13,7 +13,10 @@ module CamelCaser
 
       def transform_key(key)
         # dont touch all_Upper Keys (like "DE")
-        if key.upcase == key
+        # unless configuration.default_ignore_all_uppercase_keys
+        # is set to false
+        if CamelCaser.configuration.default_ignore_all_uppercase_keys &&
+           key.upcase == key
           normalize_key(key)
         else
           normalize_key(key).camelize(strategy)
