@@ -50,7 +50,7 @@ There are several options available
 |**default_json_response_key_transformation_strategy**|camelize|Same as *default_json_request_key_transformation_strategy, but for responses. I.e. this defines to which format the keys get transformed when the response gets sent.
 |**json_request_format_header**|request-json-format|Defines the HTTP Header key which sets the request transformation strategy as in *default_json_request_key_transformation_strategy*. This definition has higher priority than the default definition. Possible values for this Header are the same as for *default_json_request_key_transformation_strategy*|
 |**json_response_format_header**|response-json-format|Same as *json_request_format_header*, but for the response handling|
-
+|**default_ignore_all_uppercase_keys** | true | don´t camelize Keys that are all Uppercase, like CountryCodes "EN" ... |
 
 ## Tests
 
