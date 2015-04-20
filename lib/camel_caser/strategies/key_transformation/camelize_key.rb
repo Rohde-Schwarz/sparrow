@@ -12,7 +12,12 @@ module CamelCaser
       end
 
       def transform_key(key)
-        normalize_key(key).camelize(strategy)
+        # dont touch all_Upper Keys (like "DE")
+        if key.upcase == key
+          normalize_key(key)
+        else
+          normalize_key(key).camelize(strategy)
+        end
       end
     end
   end
