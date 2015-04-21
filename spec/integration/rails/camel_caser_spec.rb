@@ -5,7 +5,8 @@ describe "camel caser middleware for Rails", type: :rails do
   let(:json_object) do
     {
         userName: 'dsci',
-        bar:      {lordFoo: 12}
+        bar:      {lordFoo: 12},
+        "DE" => 'german'
     }
   end
   let(:json) { MultiJson.dump(json_object) }
@@ -34,7 +35,7 @@ describe "camel caser middleware for Rails", type: :rails do
       before do
         get '/ignore', json_object, {'CONTENT-TYPE' => 'application/json',
                                      'request-json-format'  => 'underscore',
-                     'response-json-format' => 'underscore'}
+                                     'response-json-format' => 'underscore'}
       end
 
       subject { MultiJson.load(last_response.body) }
@@ -83,6 +84,12 @@ describe "camel caser middleware for Rails", type: :rails do
         expect(subject).to have_key("keys")
         expect(subject["keys"]).to include("userName")
       end
+
+      it "did not convert all UPPERCASE words to underscore params" do
+        expect(subject).to have_key("keys")
+        expect(subject["keys"]).to include("DE")
+      end
+
     end
 
     context 'convert response output keys' do
