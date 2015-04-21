@@ -15,7 +15,7 @@ module CamelCaser
         # dont touch all_Upper Keys (like "DE")
         # unless configuration.default_ignore_all_uppercase_keys
         # is set to false
-        if CamelCaser.configuration.default_ignore_all_uppercase_keys &&
+        if CamelCaser.configuration.camelize_ignore_uppercase_keys &&
            key.upcase == key
           normalize_key(key)
         else
