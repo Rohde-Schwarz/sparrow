@@ -12,6 +12,10 @@ module CamelCaser
 
     def converted_response_body
       response_body = CamelCaser::Strategies::JsonFormatStrategy.convert(body)
+
+      # just pass the response if something went wrong inside the application
+      return response_body unless @status.in?(200..299)
+
       if response_body.present?
         response_strategy = strategy.new(last_env, :response, response_body)
         response_strategy.handle
