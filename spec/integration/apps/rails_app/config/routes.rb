@@ -54,6 +54,7 @@ Dummy::Application.routes.draw do
   get '/array_of_elements' => 'welcome#array_of_elements', default: {format: 'json'}
   get '/upcase_first_name' => 'welcome#upcase_first_name', default: {format: 'json'}
   get '/ignore' => 'welcome#ignore', default: {format: 'json'}
+  get '/error' => 'welcome#error', default: {format: 'json'}
 
   # See how all your routes lay out with "rake routes"
 

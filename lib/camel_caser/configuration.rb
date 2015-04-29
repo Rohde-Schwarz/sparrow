@@ -23,11 +23,11 @@ module CamelCaser
     end
 
     def json_format_header(type)
-      send("json_#{type}_format_header")
+      public_send("json_#{type}_format_header")
     end
 
     def default_json_key_transformation_strategy(type)
-      send("default_json_#{type}_key_transformation_strategy")
+      public_send("default_json_#{type}_key_transformation_strategy")
     end
   end
 end

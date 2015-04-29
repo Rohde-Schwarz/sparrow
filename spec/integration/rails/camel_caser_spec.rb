@@ -127,12 +127,18 @@ describe "camel caser middleware for Rails", type: :rails do
 
     end
 
-    context 'url not found' do
+    context 'reaction on error responses' do
       require 'action_controller/metal/exceptions'
-      it 'raises a RoutingError' do
+      it 'lets Rails do its RoutingError when the url is not found' do
         expect do
-          get '/not_found_url', {}, {'CONTENT-TYPE' => 'application/json'}
+          get '/not_found_url', {}, { 'CONTENT-TYPE' => 'application/json' }
         end.to raise_error ActionController::RoutingError
+      end
+
+      it 'does not touch the response if a server error gets triggered' do
+        expect {
+          get '/error', {}, { 'CONTENT-TYPE' => 'application/json' }
+        }.to raise_error ZeroDivisionError
       end
     end
   end
