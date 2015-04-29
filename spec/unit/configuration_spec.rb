@@ -15,6 +15,10 @@ module CamelCaser
       is_expected.to eq :camelize
     end
 
+    its(:accepted_content_types) do
+      is_expected.to include 'application/json'
+    end
+
     describe 'json_format_header' do
       specify do
         actual = subject.json_format_header(:response)

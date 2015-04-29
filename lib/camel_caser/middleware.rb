@@ -12,7 +12,7 @@ module CamelCaser
     end
 
     def call(env)
-      @last_env = env
+      @last_env                = env
       @status, @headers, @body = @app.call(convert(env))
     end
 
@@ -23,7 +23,7 @@ module CamelCaser
     private
 
     def strategy
-      if includes_route?
+      if includes_route? && is_processable?
         if last_env['rack.request.form_hash'].present?
           Strategies::FormHash
         else
@@ -37,6 +37,11 @@ module CamelCaser
     def includes_route?
       path = request.path || last_env['PATH_INFO']
       RouteParser.new.allow?(path)
+    end
+
+    def is_processable?
+      content_type = request.content_type || last_env['CONTENT-TYPE']
+      content_type.in?(CamelCaser.configuration.accepted_content_types)
     end
 
     def last_env

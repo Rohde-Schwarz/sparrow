@@ -4,9 +4,9 @@ describe "camel caser middleware for Rails", type: :rails do
 
   let(:json_object) do
     {
-        userName: 'dsci',
-        bar:      {lordFoo: 12},
-        "DE" => 'german'
+      userName: 'dsci',
+      bar:      { lordFoo: 12 },
+      "DE"      => 'german'
     }
   end
   let(:json) { MultiJson.dump(json_object) }
@@ -15,9 +15,9 @@ describe "camel caser middleware for Rails", type: :rails do
 
     context 'path not excluded' do
       before do
-        post '/posts', json, {'request-json-format'  => 'underscore',
-                              'response-json-format' => 'underscore',
-                              "CONTENT_TYPE" => 'application/json'}
+        post '/posts', json, { 'request-json-format'  => 'underscore',
+                               'response-json-format' => 'underscore',
+                               "CONTENT_TYPE"         => 'application/json' }
       end
 
       subject { MultiJson.load(last_response.body) }
@@ -33,9 +33,9 @@ describe "camel caser middleware for Rails", type: :rails do
 
     context 'exlude paths' do
       before do
-        get '/ignore', json_object, {'CONTENT-TYPE' => 'application/json',
-                                     'request-json-format'  => 'underscore',
-                                     'response-json-format' => 'underscore'}
+        get '/ignore', json_object, { 'CONTENT-TYPE'         => 'application/json',
+                                      'request-json-format'  => 'underscore',
+                                      'response-json-format' => 'underscore' }
       end
 
       subject { MultiJson.load(last_response.body) }
@@ -52,10 +52,13 @@ describe "camel caser middleware for Rails", type: :rails do
     end
 
     context 'converts GET url parameters' do
-      before  do
+      before do
         get '/upcase_first_name?userOptions[firstName]=susi',
             {},
-            {'request-json-format'  => 'underscore'}
+            {
+              'request-json-format' => 'underscore',
+              'CONTENT-TYPE'        => 'application/json'
+            }
       end
       subject { MultiJson.load(last_response.body) }
 
@@ -72,7 +75,7 @@ describe "camel caser middleware for Rails", type: :rails do
   context "accept header is not given" do
     context 'convert input params' do
       before do
-        post '/posts', json, {"CONTENT_TYPE" => 'application/json'}
+        post '/posts', json, { "CONTENT_TYPE" => 'text/x-json' }
       end
 
       subject do
@@ -94,9 +97,9 @@ describe "camel caser middleware for Rails", type: :rails do
 
     context 'convert response output keys' do
       before do
-        get '/welcome', json_object, {'CONTENT-TYPE' => 'application/json',
-                                      'request-json-format'  => 'camelize',
-                                      'response-json-format' => 'underscore'}
+        get '/welcome', json_object, { 'CONTENT-TYPE'         => 'application/json',
+                                       'request-json-format'  => 'camelize',
+                                       'response-json-format' => 'underscore' }
       end
 
       subject do
@@ -111,7 +114,9 @@ describe "camel caser middleware for Rails", type: :rails do
     end
 
     context 'convert elements if root element is an array instead of hash' do
-      before  { get '/array_of_elements' }
+      before do
+        get '/array_of_elements', nil, { 'CONTENT-TYPE' => 'application/json' }
+      end
       subject { MultiJson.load(last_response.body) }
 
       it 'should return an array as root element' do
