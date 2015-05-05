@@ -23,8 +23,8 @@ module CamelCaser
     private
 
     def strategy
-      if includes_route? && is_processable?
-        if last_env['rack.request.form_hash'].present?
+      if is_processable?
+        if last_env[Strategies::FormHash::REQUEST_FORM_HASH_KEY]
           Strategies::FormHash
         else
           Strategies::RawInput
@@ -34,14 +34,34 @@ module CamelCaser
       end
     end
 
+    def is_processable?
+      accepted_content_type? && accepted_accept_header? && includes_route?
+    end
+
     def includes_route?
       path = request.path || last_env['PATH_INFO']
       RouteParser.new.allow?(path)
     end
 
-    def is_processable?
-      content_type = request.content_type || last_env['CONTENT-TYPE']
-      content_type.in?(CamelCaser.configuration.accepted_content_types)
+    def accepted_content_type?
+      content_type             = request.content_type ||
+        last_env['CONTENT-TYPE'] ||
+        last_env['Content-Type']
+      allowed_content_types = CamelCaser.configuration.allowed_content_types
+      return true if allowed_content_types.include?(nil)
+      allowed_content_types.detect do |acceptable_content_type|
+        acceptable_content_type == content_type ||
+          content_type.to_s.starts_with?(acceptable_content_type.to_s)
+      end
+    end
+
+    def accepted_accept_header?
+      allowed_accepts = CamelCaser.configuration.allowed_accepts
+      return true if allowed_accepts.include?(nil)
+      accept_header = last_env['ACCEPT'] || last_env['Accept']
+      allowed_accepts.compact.detect do |accept|
+        accept_header.include?(accept)
+      end
     end
 
     def last_env
@@ -59,3 +79,4 @@ module CamelCaser
     end
   end
 end
+

@@ -15,7 +15,7 @@ module CamelCaser
       is_expected.to eq :camelize
     end
 
-    its(:accepted_content_types) do
+    its(:allowed_content_types) do
       is_expected.to include 'application/json'
     end
 

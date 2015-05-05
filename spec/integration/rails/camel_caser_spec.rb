@@ -17,7 +17,7 @@ describe "camel caser middleware for Rails", type: :rails do
       before do
         post '/posts', json, { 'request-json-format'  => 'underscore',
                                'response-json-format' => 'underscore',
-                               "CONTENT_TYPE"         => 'application/json' }
+                               'CONTENT-TYPE'         => 'application/json' }
       end
 
       subject { MultiJson.load(last_response.body) }
@@ -31,7 +31,7 @@ describe "camel caser middleware for Rails", type: :rails do
       end
     end
 
-    context 'exlude paths' do
+    context 'exclude paths' do
       before do
         get '/ignore', json_object, { 'CONTENT-TYPE'         => 'application/json',
                                       'request-json-format'  => 'underscore',
@@ -115,7 +115,9 @@ describe "camel caser middleware for Rails", type: :rails do
 
     context 'convert elements if root element is an array instead of hash' do
       before do
-        get '/array_of_elements', nil, { 'CONTENT-TYPE' => 'application/json' }
+        get '/array_of_elements', nil, {
+                                  'CONTENT-TYPE' => 'application/json; charset=utf-8'
+                                }
       end
       subject { MultiJson.load(last_response.body) }
 
@@ -139,6 +141,50 @@ describe "camel caser middleware for Rails", type: :rails do
         expect {
           get '/error', {}, { 'CONTENT-TYPE' => 'application/json' }
         }.to raise_error ZeroDivisionError
+      end
+    end
+
+    describe 'the configuration of allowed content types' do
+      it 'does not process requests and responses that have disallowed content
+ types' do
+        get '/welcome', json_object, { 'CONTENT-TYPE'        => 'text/html',
+                                       'request-json-format' => 'underscore' }
+
+        last_json = MultiJson.load(last_response.body)
+        expect(last_json).to have_key 'fakeKey'
+        expect(last_json).to have_key 'keys'
+      end
+
+      it 'processes everything if content-types configured contains nil' do
+        CamelCaser.configure do |config|
+          config.allowed_content_types = [nil]
+        end
+
+        post '/posts', json, { 'request-json-format'  => 'underscore',
+                               'response-json-format' => 'underscore',
+                               'CONTENT-TYPE'         => 'something' }
+        last_json = MultiJson.load(last_response.body)
+        expect(last_json['keys']).to include('user_name')
+        expect(last_json['keys']).to include('bar')
+        # at the moment the "let uppercase as it is"-option only works for
+        # camelCase. This test implies that.
+        expect(last_json['keys']).to include('de')
+      end
+
+      it 'does not process the request if the accept header is not allowed' do
+        CamelCaser.configure do |config|
+          config.allowed_accepts = %w[application/json]
+        end
+
+        post '/posts', json, { 'request-json-format'  => 'underscore',
+                               'response-json-format' => 'underscore',
+                               'CONTENT-TYPE'         => 'application/json',
+                               'ACCEPT'               => 'text/html' }
+
+        last_json = MultiJson.load(last_response.body)
+        expect(last_json['keys']).to include('userName')
+        expect(last_json['keys']).to include('bar')
+        expect(last_json['keys']).to include('DE')
       end
     end
   end

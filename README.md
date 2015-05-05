@@ -58,12 +58,17 @@ value is possible. Defaults to 'request-json-format'|
 'response-json-format'|
 |**camelize_ignore_uppercase_keys** | `true` | don't camelize Keys that are all
  Uppercase, like CountryCodes "EN" ... |
-|**accepted_content_types**|`['application/json', 'text/x-json']`|A list of HTTP
+|**allowed_content_types**|`['application/json', 'text/x-json']`|A list of HTTP
  content types upon which the middleware shall trigger and possibly start 
  conversion. Defaults to `['application/json', 
  'application/x-www-form-urlencoded', 'text/x-json']`. If `nil` is present in
   the list, requests/responses with *no* Content-Type header will be 
   processed as well.|
+|**allowed_accepts**|`['application/json', 'text/x-json']`|Same as 
+**accepted_content_types**, but reacts to the HTTP Accept Header. Applies to 
+the same possible options, behavior. Defaults to the same set of MIME types, 
+but also includes `nil` by default, which ignores checking the Accept header 
+in default configuration| 
 
 ## Tests
 

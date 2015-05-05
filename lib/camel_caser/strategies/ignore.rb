@@ -20,6 +20,15 @@ module CamelCaser
       end
 
       def handle
+        # synchronize rack.input and form hash values
+        input = @env['rack.input'].gets
+
+        begin
+          @env['rack.request.form_hash'] = MultiJson.load(input)
+        ensure
+          @env['rack.input'].rewind
+        end if input.present?
+
         @env
       end
 

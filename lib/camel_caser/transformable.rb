@@ -41,8 +41,11 @@ module CamelCaser
     end
 
     def ensure_json
-      json_params = unless params.is_a?(Hash)
+      json_params = if !params.is_a?(Hash)
                       CamelCaser::Strategies::JsonFormatStrategy.convert(params)
+                    elsif params.is_a?(Hash) && params.values == [nil] &&
+                      params.keys.length == 1
+                      params.keys.first
                     else
                       params
                     end

@@ -9,7 +9,8 @@ describe "camel caser middleware", type: :rack do
   context "accept header is given" do 
     
     before do 
-      post '/', json, {'request-json-format' => 'underscore'}
+      post '/', json, {'request-json-format' => 'underscore',
+                       'response-json-format' => 'underscore'}
     end
   
     subject do 
@@ -21,6 +22,7 @@ describe "camel caser middleware", type: :rack do
       expect(subject["keys"]).to include("user_name")
       expect(subject["keys"]).to include("bar")
       expect(subject["keys"]).to include("lord_foo")
+      expect(subject).to have_key 'fake_key'
     end
   end
 

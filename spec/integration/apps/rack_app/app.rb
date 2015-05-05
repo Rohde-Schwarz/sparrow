@@ -18,9 +18,9 @@ class App
         result << value.keys
       end
       result
-    end
+    end.flatten
     MultiJson.dump({
-                       keys: keys.join(","),
+                       keys: keys,
                        fakeKey: true,
                        fake_key: false
                    })
