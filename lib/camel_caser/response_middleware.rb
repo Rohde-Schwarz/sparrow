@@ -31,7 +31,7 @@ module CamelCaser
     end
 
     def unprocessable_status?
-      @status.in?(500..599) || @status == 404
+      @status.in?(500..511) || @status == 404
     end
   end
 end
