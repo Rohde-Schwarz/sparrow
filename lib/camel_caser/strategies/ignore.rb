@@ -25,6 +25,8 @@ module CamelCaser
 
         begin
           @env['rack.request.form_hash'] = MultiJson.load(input)
+        rescue MultiJson::ParseError
+          # ignore
         ensure
           @env['rack.input'].rewind
         end if input.present?
