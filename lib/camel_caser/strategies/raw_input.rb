@@ -37,9 +37,10 @@ module CamelCaser
 
       def handle_raw_rack
         if params.present?
-          @env['rack.input'] = StringIO.new(json_body)
+          new_raw_input      = json_body.force_encoding("BINARY")
+          @env['rack.input'] = StringIO.new(new_raw_input)
           @env['rack.input'].rewind
-          @env['CONTENT_LENGTH'] = json_body.length
+          @env['CONTENT_LENGTH'] = new_raw_input.length
         end
       end
     end
