@@ -56,5 +56,11 @@ There are several options available
 
 ## Tests
 
-Just run `rspec` and you are off to go. This runs the whole suite including
-specs for unit- & integrationtests for Rails and Rack.
+Just run `rake` and you are off to go. This runs the whole suite including
+specs for unit- & integrationtests for Rails and Rack including different versions of Rails.
+
+If you want to test a specific version of Rails:
+
+```
+export RAILS_VERSION=3.2.17; bundle update; bundle exec rspec
+```

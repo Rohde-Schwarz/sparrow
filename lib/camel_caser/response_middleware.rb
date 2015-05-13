@@ -1,4 +1,4 @@
-require 'active_support/core_ext/object/blank'
+require 'active_support/core_ext/object/inclusion'
 require 'camel_caser/middleware'
 require 'camel_caser/strategies/json_format_strategies/json_format_strategy'
 

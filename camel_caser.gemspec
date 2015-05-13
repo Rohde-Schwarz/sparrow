@@ -1,5 +1,6 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
+rails_version = ENV["RAILS_VERSION"] || "3.2.21"
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'camel_caser/version'
 
@@ -28,9 +29,7 @@ supported.
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec", '~> 3'
   spec.add_development_dependency "rspec-its"
-  spec.add_development_dependency "rack", "1.4.5"
   spec.add_development_dependency "rack-test"
   spec.add_development_dependency "multi_json"
-  spec.add_development_dependency "rails", "3.2.21"
-  spec.add_development_dependency "activeresource", "3.2.21"
+  spec.add_development_dependency "rails", rails_version
 end
