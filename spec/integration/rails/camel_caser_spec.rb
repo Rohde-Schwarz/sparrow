@@ -5,7 +5,7 @@ describe "camel caser middleware for Rails", type: :rails do
   let(:json_object) do
     {
       userName: 'dsci',
-      bar:      { lordFoo: 12 },
+      bar:      { lordFüü: 12 },
       "DE"      => 'german'
     }
   end
@@ -27,7 +27,7 @@ describe "camel caser middleware for Rails", type: :rails do
         expect(subject).to have_key("keys")
         expect(subject["keys"]).to include("user_name")
         expect(subject["keys"]).to include("bar")
-        expect(subject["keys"]).to include("lord_foo")
+        expect(subject["keys"]).to include("lord_füü")
       end
     end
 
@@ -45,7 +45,7 @@ describe "camel caser middleware for Rails", type: :rails do
         expect(subject).to have_key('snake_case')
         expect(subject).to have_key('keys')
         keys = subject['keys']
-        %w(userName lordFoo bar).each do |key|
+        %w(userName lordFüü bar).each do |key|
           expect(keys).to include(key)
         end
       end
