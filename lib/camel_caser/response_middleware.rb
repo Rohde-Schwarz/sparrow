@@ -12,6 +12,10 @@ module CamelCaser
 
     def converted_response_body
       response_body = CamelCaser::Strategies::JsonFormatStrategy.convert(body)
+
+      # just pass the response if something went wrong inside the application
+      return response_body if unprocessable_status?
+
       if response_body.present?
         response_strategy = strategy.new(last_env, :response, response_body)
         response_strategy.handle
@@ -24,6 +28,10 @@ module CamelCaser
       else
         []
       end
+    end
+
+    def unprocessable_status?
+      @status.in?(500..511) || @status == 404
     end
   end
 end

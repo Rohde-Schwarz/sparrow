@@ -27,7 +27,7 @@ module CamelCaser
           @params
         else
           input_io = @env['rack.input']
-          params   = input_io.readlines.join
+          params   = input_io.send(:read)
           input_io.rewind
           params
         end

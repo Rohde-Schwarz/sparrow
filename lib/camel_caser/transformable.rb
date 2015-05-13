@@ -1,6 +1,11 @@
 require 'camel_caser/strategies/transform_params'
 require 'camel_caser/strategies/json_format_strategies/json_format_strategy'
 
+if ActiveSupport::VERSION::STRING.match(/3\.\d+\.\d+/)
+  require 'active_support/core_ext/object/to_param'
+  require 'active_support/core_ext/object/to_query'
+end
+
 module CamelCaser
   module Transformable
     def transform_params
@@ -36,8 +41,11 @@ module CamelCaser
     end
 
     def ensure_json
-      json_params = unless params.is_a?(Hash)
+      json_params = if !params.is_a?(Hash)
                       CamelCaser::Strategies::JsonFormatStrategy.convert(params)
+                    elsif params.is_a?(Hash) && params.values == [nil] &&
+                      params.keys.length == 1
+                      params.keys.first
                     else
                       params
                     end

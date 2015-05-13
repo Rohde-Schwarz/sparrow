@@ -10,7 +10,7 @@ module CamelCaser
       end
 
       def params
-        ret = @params || @env['rack.input'].readlines.join
+        ret = @params || @env['rack.input'].send(:read)
         @env['rack.input'].rewind
         ret
       end
@@ -20,6 +20,17 @@ module CamelCaser
       end
 
       def handle
+        # synchronize rack.input and form hash values
+        input = @env['rack.input'].gets
+
+        begin
+          @env['rack.request.form_hash'] = MultiJson.load(input)
+        rescue MultiJson::ParseError
+          # ignore
+        ensure
+          @env['rack.input'].rewind
+        end if input.present?
+
         @env
       end
 

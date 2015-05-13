@@ -17,12 +17,12 @@ module CamelCaser
         self.key_transformation_strategy = key_transformation_strategy
       end
 
-      def transform(collection)
-        case collection
+      def transform(collection_or_hash)
+        case collection_or_hash
         when Array
-          collection.map { |element| transform(element) }
+          collection_or_hash.map { |element| transform(element) }
         when Hash
-          collection.deep_transform_keys do |key|
+          collection_or_hash.deep_transform_keys do |key|
             key_transformation_strategy.transform_key(key)
           end
         end

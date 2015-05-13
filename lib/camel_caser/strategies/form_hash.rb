@@ -4,6 +4,7 @@ require 'camel_caser/transformable'
 module CamelCaser
   module Strategies
     class FormHash
+      REQUEST_FORM_HASH_KEY = 'rack.request.form_hash'
       include Transformable
 
       attr_reader :env, :type
@@ -24,19 +25,16 @@ module CamelCaser
       end
 
       def params
-        @params || @env[form_hash_key]
+        @params || env[REQUEST_FORM_HASH_KEY]
       end
 
       private
 
       def handle_form_hash
         if params.present?
-          @env[form_hash_key] = transform_params(params)
+          transformed_params = transform_params
+          @env[REQUEST_FORM_HASH_KEY] = transformed_params
         end
-      end
-
-      def form_hash_key
-        'rack.request.form_hash'
       end
     end
   end
