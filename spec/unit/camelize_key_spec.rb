@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe CamelCaser::Strategies::CamelizeKey do
+describe Sparrow::Strategies::CamelizeKey do
 
-  subject { CamelCaser::Strategies::CamelizeKey.new }
+  subject { Sparrow::Strategies::CamelizeKey.new }
 
   describe '#transform_key' do
 

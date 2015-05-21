@@ -156,7 +156,7 @@ describe "camel caser middleware for Rails", type: :rails do
       end
 
       it 'processes nothing if content-types configured contains nil and content type is sent' do
-        CamelCaser.configure do |config|
+        Sparrow.configure do |config|
           config.allowed_content_types = [nil]
         end
 
@@ -169,7 +169,7 @@ describe "camel caser middleware for Rails", type: :rails do
       end
 
       it 'processes everything if content-types configured contains nil and content-type is empty' do
-        CamelCaser.configure do |config|
+        Sparrow.configure do |config|
           config.allowed_content_types = [nil]
         end
 
@@ -187,7 +187,7 @@ describe "camel caser middleware for Rails", type: :rails do
       end
 
       it 'processes everything if content-types configured contains nil and no content-type is sent' do
-        CamelCaser.configure do |config|
+        Sparrow.configure do |config|
           config.allowed_content_types = [nil]
         end
 

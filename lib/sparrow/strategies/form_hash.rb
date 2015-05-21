@@ -1,7 +1,7 @@
 require 'active_support/core_ext/object/blank'
-require 'camel_caser/transformable'
+require 'sparrow/transformable'
 
-module CamelCaser
+module Sparrow
   module Strategies
     class FormHash
       REQUEST_FORM_HASH_KEY = 'rack.request.form_hash'

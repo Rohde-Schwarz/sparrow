@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/key_normalizer'
 
-module CamelCaser
+module Sparrow
   module Strategies
     class UnderscoreKey
       include KeyNormalizer

@@ -1,6 +1,6 @@
-require 'camel_caser/middleware'
+require 'sparrow/middleware'
 
-module CamelCaser
+module Sparrow
   class RequestMiddleware < Middleware
     def convert(env)
       super

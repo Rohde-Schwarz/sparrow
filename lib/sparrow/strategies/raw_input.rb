@@ -1,6 +1,6 @@
 require 'active_support/core_ext/object/blank'
 
-module CamelCaser
+module Sparrow
   module Strategies
     class RawInput
       include Transformable

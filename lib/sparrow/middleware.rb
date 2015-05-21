@@ -1,9 +1,9 @@
 require 'active_support/core_ext/object/blank'
-require 'camel_caser/strategies/form_hash'
-require 'camel_caser/strategies/raw_input'
-require 'camel_caser/strategies/ignore'
+require 'sparrow/strategies/form_hash'
+require 'sparrow/strategies/raw_input'
+require 'sparrow/strategies/ignore'
 
-module CamelCaser
+module Sparrow
   class Middleware
     attr_reader :app, :body, :status, :headers
 
@@ -48,7 +48,7 @@ module CamelCaser
     end
 
     def accepted_accept_header?
-      allowed_accepts = CamelCaser.configuration.allowed_accepts
+      allowed_accepts = Sparrow.configuration.allowed_accepts
       accept_header = last_env['ACCEPT'] || last_env['Accept']
 
       allowed_accepts.include?(nil) || accept_type_matches?(allowed_accepts, accept_header)
@@ -78,11 +78,11 @@ module CamelCaser
     end
 
     def content_type_equals?(type)
-      CamelCaser.configuration.allowed_content_types.include?(type)
+      Sparrow.configuration.allowed_content_types.include?(type)
     end
 
     def content_type_matches?(type)
-      matches = CamelCaser.configuration.allowed_content_types.map do |acceptable_content_type|
+      matches = Sparrow.configuration.allowed_content_types.map do |acceptable_content_type|
         (acceptable_content_type && type.to_s.starts_with?(acceptable_content_type.to_s))
       end
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module CamelCaser
+module Sparrow
   describe Configuration, type: 'unit' do
     its(:json_request_format_header) { is_expected.to eq 'request-json-format' }
     its(:json_response_format_header) do

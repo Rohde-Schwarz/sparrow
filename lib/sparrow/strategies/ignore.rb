@@ -1,4 +1,4 @@
-module CamelCaser
+module Sparrow
   module Strategies
     class Ignore
       include Transformable

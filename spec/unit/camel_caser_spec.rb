@@ -1,21 +1,21 @@
 require 'spec_helper'
 
-describe CamelCaser do
+describe Sparrow do
   describe 'configuration' do
     it 'should return a Configuration object' do
-      expect(CamelCaser.configuration).to(
-          be_an_instance_of(CamelCaser::Configuration))
+      expect(Sparrow.configuration).to(
+          be_an_instance_of(Sparrow::Configuration))
     end
   end
 
   describe 'configure' do
     it 'should yield the configuration and save it' do
-      CamelCaser.configure do |configuration|
+      Sparrow.configure do |configuration|
         configuration.json_request_format_header = 'panda'
         configuration.excluded_routes = ['panda']
       end
 
-      configuration = CamelCaser.configuration
+      configuration = Sparrow.configuration
       expect(configuration.json_request_format_header).to eq 'panda'
       expect(configuration.excluded_routes).to eq ['panda']
     end

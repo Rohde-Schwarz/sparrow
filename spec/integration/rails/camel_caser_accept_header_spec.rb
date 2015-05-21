@@ -14,13 +14,13 @@ describe "camel caser middleware for Rails", type: :rails do
     context "camel caser middleware for Rails with accept header " do
 
       before do
-        CamelCaser.configure do |config|
+        Sparrow.configure do |config|
           config.allowed_accepts = %w[foo/bar]
         end
       end
 
       after do
-        CamelCaser.configure do |config|
+        Sparrow.configure do |config|
           config.allowed_accepts = [nil]
         end
       end

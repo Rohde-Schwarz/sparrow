@@ -1,4 +1,4 @@
-# CamelCaser
+# Sparrow
 
 A Rack middleware for converting the params keys and JSON response keys of a Rack application.
 
@@ -6,7 +6,7 @@ A Rack middleware for converting the params keys and JSON response keys of a Rac
 
 Add this line to your application's Gemfile:
 
-    gem 'camel_caser'
+    gem 'sparrow'
 
 And then execute:
 
@@ -14,16 +14,16 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install camel_caser
+    $ gem install sparrow
 
 ## Usage
 
 If you're using Rails, that's it. You haven't to do anything more. If you're not using Rails, you will have to add to your config.ru:
 
 ```rb
-require 'camel_caser'
+require 'sparrow'
 
-use CamelCaser::Middleware
+use Sparrow::Middleware
 ```
 
 ## Configuration
@@ -34,7 +34,7 @@ make the middleware act as you want it to.
 in your configuration file (such as application.rb if you are using Rails)
 
 ```ruby
-CamelCaser.configure do |config|
+Sparrow.configure do |config|
   config.excluded_routes = [
     Regexp.new('api/model/certificates')
   ]

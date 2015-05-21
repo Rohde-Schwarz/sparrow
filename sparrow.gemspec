@@ -2,11 +2,11 @@
 lib = File.expand_path('../lib', __FILE__)
 rails_version = ENV["RAILS_VERSION"] || "3.2.21"
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'camel_caser/version'
+require 'sparrow/version'
 
 Gem::Specification.new do |spec|
-  spec.name        = "camel_caser"
-  spec.version     = CamelCaser::VERSION
+  spec.name        = "sparrow"
+  spec.version     = Sparrow::VERSION
   spec.authors     = ["Daniel Schmidt", "Andreas Müller"]
   spec.email       = ["dsci@code79.net", "anmuel86@gmail.com"]
   spec.summary     = %q{A POC to have a Rack middleware parsing the params keys into underscore}

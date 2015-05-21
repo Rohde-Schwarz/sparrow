@@ -1,7 +1,7 @@
-require 'camel_caser/strategies/json_format_strategies/default_json_format_strategy'
+require 'sparrow/strategies/json_format_strategies/default_json_format_strategy'
 require 'active_support/core_ext/object/blank'
 
-module CamelCaser
+module Sparrow
   module Strategies
     class JsonFormatStrategy
       def initialize(*args)
@@ -27,7 +27,7 @@ module CamelCaser
 
       def self.json_format_strategies
         init
-        default = CamelCaser::Strategies::DefaultJsonFormatStrategy.instance
+        default = Sparrow::Strategies::DefaultJsonFormatStrategy.instance
         @@json_format_strategies.reject(&:blank?) + [default]
       end
     end

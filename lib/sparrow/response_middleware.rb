@@ -1,8 +1,8 @@
 require 'active_support/core_ext/object/inclusion'
-require 'camel_caser/middleware'
-require 'camel_caser/strategies/json_format_strategies/json_format_strategy'
+require 'sparrow/middleware'
+require 'sparrow/strategies/json_format_strategies/json_format_strategy'
 
-module CamelCaser
+module Sparrow
   class ResponseMiddleware < Middleware
     def call(env)
       @last_env                = env
@@ -11,7 +11,7 @@ module CamelCaser
     end
 
     def converted_response_body
-      response_body = CamelCaser::Strategies::JsonFormatStrategy.convert(body)
+      response_body = Sparrow::Strategies::JsonFormatStrategy.convert(body)
 
       # just pass the response if something went wrong inside the application
       return response_body if unprocessable_status?

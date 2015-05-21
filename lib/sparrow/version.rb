@@ -1,3 +1,3 @@
-module CamelCaser
+module Sparrow
   VERSION = '0.0.11'
 end

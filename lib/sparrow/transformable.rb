@@ -1,12 +1,12 @@
-require 'camel_caser/strategies/transform_params'
-require 'camel_caser/strategies/json_format_strategies/json_format_strategy'
+require 'sparrow/strategies/transform_params'
+require 'sparrow/strategies/json_format_strategies/json_format_strategy'
 
 if ActiveSupport::VERSION::STRING.match(/3\.\d+\.\d+/)
   require 'active_support/core_ext/object/to_param'
   require 'active_support/core_ext/object/to_query'
 end
 
-module CamelCaser
+module Sparrow
   module Transformable
     def transform_params
       transform_params_strategy.transform(ensure_json)
@@ -14,7 +14,7 @@ module CamelCaser
 
     def transform_strategy
       default  =
-          CamelCaser.configuration.default_json_key_transformation_strategy(type)
+          Sparrow.configuration.default_json_key_transformation_strategy(type)
       strategy = json_format || default
       strategy.to_sym
     end
@@ -34,7 +34,7 @@ module CamelCaser
     private
     def json_format
       if respond_to?(:env) then
-        env[CamelCaser.configuration.json_format_header(type)]
+        env[Sparrow.configuration.json_format_header(type)]
       else
         nil
       end
@@ -42,7 +42,7 @@ module CamelCaser
 
     def ensure_json
       json_params = if !params.is_a?(Hash)
-                      CamelCaser::Strategies::JsonFormatStrategy.convert(params)
+                      Sparrow::Strategies::JsonFormatStrategy.convert(params)
                     elsif params.is_a?(Hash) && params.values == [nil] &&
                       params.keys.length == 1
                       params.keys.first
@@ -62,7 +62,7 @@ module CamelCaser
     end
 
     def transform_params_strategy
-      transform_params = CamelCaser::Strategies::TransformParams
+      transform_params = Sparrow::Strategies::TransformParams
       transform_params.new(transform_strategy)
     end
 

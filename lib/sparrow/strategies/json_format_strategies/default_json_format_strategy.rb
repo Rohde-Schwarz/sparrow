@@ -1,6 +1,6 @@
 require 'singleton'
 
-module CamelCaser
+module Sparrow
   module Strategies
     class DefaultJsonFormatStrategy
       include Singleton

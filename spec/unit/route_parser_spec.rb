@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module CamelCaser
+module Sparrow
   describe RouteParser, type: :unit do
     describe '#excluded routes' do
       it 'should default to the excluded routes from the configuration' do

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/json_format_strategy'
 
-module CamelCaser
+module Sparrow
   module Strategies
     class RackBody < JsonFormatStrategy
       register_json_format

@@ -1,12 +1,12 @@
 require File.join(File.dirname(__FILE__), "app")
 require File.join(File.dirname(__FILE__), '..',
-                                          '..',
-                                          '..',
-                                          '..',
-                                          'lib', 
-                                          'camel_caser.rb')
+                  '..',
+                  '..',
+                  '..',
+                  'lib',
+                  'sparrow.rb')
 
-use CamelCaser::RequestMiddleware
-use CamelCaser::ResponseMiddleware
+use Sparrow::RequestMiddleware
+use Sparrow::ResponseMiddleware
 
 run App.new

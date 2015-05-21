@@ -1,4 +1,4 @@
-module CamelCaser
+module Sparrow
   module Strategies
     module KeyNormalizer
       def normalize_key(key)

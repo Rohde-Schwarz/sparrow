@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module CamelCaser
+module Sparrow
   describe PathNormalizer, type: :unit do
     let(:clazz) do
       Class.new do

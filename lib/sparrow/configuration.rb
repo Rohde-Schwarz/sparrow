@@ -1,4 +1,4 @@
-module CamelCaser
+module Sparrow
   class Configuration
     attr_accessor :json_request_format_header,
                   :json_response_format_header,

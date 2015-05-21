@@ -5,11 +5,11 @@ require 'bundler'
 require "action_controller/railtie"
 require "action_mailer/railtie"
 require "sprockets/railtie"
-require 'camel_caser/railtie'
+require 'sparrow/railtie'
 
 Bundler.require(*Rails.groups)
 
-CamelCaser.configure do |config|
+Sparrow.configure do |config|
   config.excluded_routes = [
       'ignore'
   ]
