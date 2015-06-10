@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'sparrow/version'
 
 Gem::Specification.new do |spec|
-  spec.name        = "sparrow"
+  spec.name        = "cp-sparrow"
   spec.version     = Sparrow::VERSION
   spec.authors     = ["Daniel Schmidt", "Andreas Müller"]
   spec.email       = ["dsci@code79.net", "anmuel86@gmail.com"]

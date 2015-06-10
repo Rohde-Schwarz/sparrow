@@ -6,7 +6,7 @@ A Rack middleware for converting the params keys and JSON response keys of a Rac
 
 Add this line to your application's Gemfile:
 
-    gem 'sparrow'
+    gem 'cp-sparrow', require: 'sparrow'
 
 And then execute:
 
