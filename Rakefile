@@ -19,7 +19,7 @@ def run_tests_for_version(version)
   system({'RAILS_VERSION' => version}, commands.join(';'))
 end
 
-task :default do
+task :all do
   RAILS_VERSIONS.each do |version|
     puts "Testing gem for rails version: #{version}"
     success = run_tests_for_version(version)
@@ -29,4 +29,8 @@ task :default do
       exit($?.exitstatus)
     end
   end
+end
+
+task :default do
+  run_tests_for_version(ENV['RAILS_VERSION'] || '3.2.21')
 end
