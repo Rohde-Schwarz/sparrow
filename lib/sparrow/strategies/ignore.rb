@@ -34,6 +34,10 @@ module Sparrow
         @env
       end
 
+      def json_body
+        params
+      end
+
       def transform_params
         ensure_json
       end
