@@ -5,18 +5,18 @@ RSpec::Core::RakeTask.new(:spec)
 
 RAILS_VERSIONS = [
   "3.2.21",
-  # "4.0.13"
+  "4.0.13"
 ]
 
 def run_tests_for_version(version)
   commands = []
 
   commands << "rm Gemfile.lock"
-  commands << "export RAILS_VERSION=#{version}"
-  commands << "bundle update"
+  commands << "gem install rails -v #{version}"
+  commands << "bundle install"
   commands << "bundle exec rspec"
 
-  system(commands.join(';'))
+  system({'RAILS_VERSION' => version}, commands.join(';'))
 end
 
 task :default do
