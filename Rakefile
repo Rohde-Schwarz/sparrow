@@ -4,8 +4,8 @@ require "rspec/core/rake_task"
 RSpec::Core::RakeTask.new(:spec)
 
 RAILS_VERSIONS = [
-  "3.2.17",
-  "4.0.13"
+  "3.2.21",
+  # "4.0.13"
 ]
 
 def run_tests_for_version(version)
