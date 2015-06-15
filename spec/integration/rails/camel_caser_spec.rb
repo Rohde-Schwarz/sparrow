@@ -5,8 +5,9 @@ describe "camel caser middleware for Rails", type: :rails do
   let(:json_object) do
     {
       userName: 'dsci',
+      last_name: 'smith',
       bar:      { lordFüü: 12 },
-      "DE"      => 'german'
+      "DE"      => 'german',
     }
   end
   let(:json) { MultiJson.dump(json_object) }
@@ -32,21 +33,79 @@ describe "camel caser middleware for Rails", type: :rails do
     end
 
     context 'exclude paths' do
-      before do
-        get '/ignore', json_object, { 'CONTENT-TYPE'         => 'application/json',
-                                      'request-json-format'  => 'underscore',
-                                      'response-json-format' => 'underscore' }
+      context 'ignored json in and out' do
+        before do
+          get '/ignore', json_object, { 'CONTENT-TYPE'         => 'application/json',
+                                        'request-json-format'  => 'underscore',
+                                        'response-json-format' => 'underscore' }
+        end
+
+        subject { MultiJson.load(last_response.body) }
+
+        it 'should not touch the input keys and the response' do
+          expect(subject).to have_key('camelCase')
+          expect(subject).to have_key('snake_case')
+          expect(subject).to have_key('keys')
+          keys = subject['keys']
+          %w(userName lordFüü bar).each do |key|
+            expect(keys).to include(key)
+          end
+        end
       end
 
-      subject { MultiJson.load(last_response.body) }
+      context 'ignored json in and ignored text out' do
+        before do
+          get '/ignore/non_json_response', json_object,
+            { 'CONTENT-TYPE'         => 'application/json',
+              'request-json-format'  => 'underscore',
+              'response-json-format' => 'underscore' }
+        end
 
-      it 'should not touch the input keys and the response' do
-        expect(subject).to have_key('camelCase')
-        expect(subject).to have_key('snake_case')
-        expect(subject).to have_key('keys')
-        keys = subject['keys']
-        %w(userName lordFüü bar).each do |key|
-          expect(keys).to include(key)
+        subject { last_response }
+
+        it { is_expected.to be_successful }
+
+        it 'should answer with a KEY' do
+          expect(subject.body).to match /BEGIN PUBLIC KEY/
+        end
+
+        it 'should not touch the keys' do
+          expect(subject.body).to match /userName/
+          expect(subject.body).to match /lordFüü/
+          expect(subject.body).to match /bar/
+          expect(subject.body).to match /last_name/
+        end
+
+        it 'should be content-type html' do
+          expect(subject.header['Content-Type']).to match /text\/html/
+        end
+      end
+
+      context 'convert json in and ignored text out' do
+        before do
+          get '/welcome/non_json_response', json_object,
+            { 'CONTENT-TYPE'         => 'application/json',
+              'request-json-format'  => 'underscore',
+              'response-json-format' => 'underscore' }
+        end
+
+        subject { last_response }
+
+        it { is_expected.to be_successful }
+
+        it 'should answer with a KEY' do
+          expect(last_response.body).to match /BEGIN PUBLIC KEY/
+        end
+
+        it 'should touch the keys' do
+          expect(subject.body).to match /user_name/
+          expect(subject.body).to match /lord_füü/
+          expect(subject.body).to match /bar/
+          expect(subject.body).to match /last_name/
+        end
+
+        it 'should be content-type html' do
+          expect(last_response.header['Content-Type']).to match /text\/html/
         end
       end
     end
@@ -145,9 +204,8 @@ describe "camel caser middleware for Rails", type: :rails do
     end
 
     describe 'the configuration of allowed content types' do
-      it 'does not process requests and responses that have disallowed content
- types' do
-        get '/welcome', json_object, { 'CONTENT-TYPE'        => 'text/html',
+      it 'does not process requests and responses that have disallowed content types' do
+        get '/welcome', json_object, { 'CONTENT_TYPE'        => 'text/html',
                                        'request-json-format' => 'underscore' }
 
         last_json = MultiJson.load(last_response.body)
@@ -162,7 +220,8 @@ describe "camel caser middleware for Rails", type: :rails do
 
         post '/posts', json, { 'request-json-format'  => 'underscore',
                                'response-json-format' => 'underscore',
-                               'CONTENT-TYPE'         => 'something' }
+                               'CONTENT-TYPE'         => '' }
+
         last_json = MultiJson.load(last_response.body)
         expect(last_json['keys']).to include('userName')
         expect(last_json['keys']).to include('DE')
@@ -174,9 +233,8 @@ describe "camel caser middleware for Rails", type: :rails do
         end
 
         post '/posts', json, { 'request-json-format'  => 'underscore',
-                                           'response-json-format' => 'underscore',
-                                            'CONTENT_TYPE'         => ''
-                                          }
+                               'response-json-format' => 'underscore',
+                               'CONTENT_TYPE'         => ''}
 
         last_json = MultiJson.load(last_response.body)
         expect(last_json['keys']).to include('user_name')

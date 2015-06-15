@@ -24,12 +24,10 @@ module Sparrow
 
     def strategy
       if is_processable?
-        if last_env[Strategies::FormHash::REQUEST_FORM_HASH_KEY]
-          Strategies::FormHash
-        else
-          Strategies::RawInput
-        end
+        Rails.logger.debug 'Choosing strategy RawInput' if defined? Rails
+        Strategies::RawInput
       else
+        Rails.logger.debug 'Choosing strategy Ignore' if defined? Rails
         Strategies::Ignore
       end
     end
@@ -44,7 +42,7 @@ module Sparrow
     end
 
     def accepted_content_type?
-      content_type_equals?(request_content_type) || content_type_matches?(request_content_type)
+      content_type_equals?(content_type) || content_type_matches?(content_type)
     end
 
     def accepted_accept_header?
@@ -66,15 +64,6 @@ module Sparrow
                       end
 
       request_class.new(last_env)
-    end
-
-    def request_content_type
-      content_type = request.content_type ||
-          last_env['CONTENT-TYPE'] ||
-          last_env['Content-Type'] ||
-          last_env['CONTENT_TYPE']
-
-      content_type.present? ? content_type : nil
     end
 
     def content_type_equals?(type)

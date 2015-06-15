@@ -33,5 +33,12 @@ module Sparrow
     def unprocessable_status?
       @status.in?(500..511) || @status == 404
     end
+
+    def content_type
+      headers['Content-Type'].split(';').first #||
+          # last_env['CONTENT-TYPE'] ||
+          # last_env['Content-Type'] ||
+          # last_env['CONTENT_TYPE']
+    end
   end
 end
