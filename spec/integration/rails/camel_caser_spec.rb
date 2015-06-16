@@ -81,6 +81,23 @@ describe "camel caser middleware for Rails", type: :rails do
         end
       end
 
+      context 'ignored json in and ignored binary out' do
+        before do
+          get '/ignore/non_json_binary_response', json_object,
+            { 'CONTENT-TYPE'         => 'application/json',
+              'request-json-format'  => 'underscore',
+              'response-json-format' => 'underscore' }
+        end
+
+        subject { last_response }
+
+        it { is_expected.to be_successful }
+
+        it 'should be content-type gif' do
+          expect(subject.header['Content-Type']).to eql "image/gif"
+        end
+      end
+
       context 'convert json in and ignored text out' do
         before do
           get '/welcome/non_json_text_response', json_object,

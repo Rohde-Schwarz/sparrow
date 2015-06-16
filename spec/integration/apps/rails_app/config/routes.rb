@@ -56,6 +56,7 @@ Dummy::Application.routes.draw do
   get '/upcase_first_name' => 'welcome#upcase_first_name', default: {format: 'json'}
   get '/ignore' => 'welcome#ignore', default: {format: 'json'}
   get '/ignore/non_json_text_response' => 'welcome#non_json_text_response', default: {format: 'json'}
+  get '/ignore/non_json_binary_response' => 'welcome#non_json_binary_response', default: {format: 'json'}
   get '/error' => 'welcome#error', default: {format: 'json'}
 
   # See how all your routes lay out with "rake routes"
