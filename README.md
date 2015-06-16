@@ -2,6 +2,8 @@
 
 A Rack middleware for converting the params keys and JSON response keys of a Rack application.
 
+[![Build Status](https://travis-ci.org/GateprotectGmbH/sparrow.svg?branch=master)](https://travis-ci.org/GateprotectGmbH/sparrow) [![Gem Version](https://badge.fury.io/rb/cp-sparrow.svg)](http://badge.fury.io/rb/cp-sparrow)
+
 ## Installation
 
 Add this line to your application's Gemfile:
