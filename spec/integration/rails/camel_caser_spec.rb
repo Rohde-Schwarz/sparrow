@@ -55,7 +55,7 @@ describe "camel caser middleware for Rails", type: :rails do
 
       context 'ignored json in and ignored text out' do
         before do
-          get '/ignore/non_json_response', json_object,
+          get '/ignore/non_json_text_response', json_object,
             { 'CONTENT-TYPE'         => 'application/json',
               'request-json-format'  => 'underscore',
               'response-json-format' => 'underscore' }
@@ -83,7 +83,7 @@ describe "camel caser middleware for Rails", type: :rails do
 
       context 'convert json in and ignored text out' do
         before do
-          get '/welcome/non_json_response', json_object,
+          get '/welcome/non_json_text_response', json_object,
             { 'CONTENT-TYPE'         => 'application/json',
               'request-json-format'  => 'underscore',
               'response-json-format' => 'underscore' }
