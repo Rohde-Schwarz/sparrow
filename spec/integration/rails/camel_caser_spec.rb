@@ -55,7 +55,7 @@ describe "camel caser middleware for Rails", type: :rails do
 
       context 'ignored json in and ignored text out' do
         before do
-          get '/ignore/non_json_response', json_object,
+          get '/ignore/non_json_text_response', json_object,
             { 'CONTENT-TYPE'         => 'application/json',
               'request-json-format'  => 'underscore',
               'response-json-format' => 'underscore' }
@@ -81,9 +81,26 @@ describe "camel caser middleware for Rails", type: :rails do
         end
       end
 
+      context 'ignored json in and ignored binary out' do
+        before do
+          get '/ignore/non_json_binary_response', json_object,
+            { 'CONTENT-TYPE'         => 'application/json',
+              'request-json-format'  => 'underscore',
+              'response-json-format' => 'underscore' }
+        end
+
+        subject { last_response }
+
+        it { is_expected.to be_successful }
+
+        it 'should be content-type gif' do
+          expect(subject.header['Content-Type']).to eql "image/gif"
+        end
+      end
+
       context 'convert json in and ignored text out' do
         before do
-          get '/welcome/non_json_response', json_object,
+          get '/welcome/non_json_text_response', json_object,
             { 'CONTENT-TYPE'         => 'application/json',
               'request-json-format'  => 'underscore',
               'response-json-format' => 'underscore' }
@@ -106,6 +123,31 @@ describe "camel caser middleware for Rails", type: :rails do
 
         it 'should be content-type html' do
           expect(last_response.header['Content-Type']).to match /text\/html/
+        end
+      end
+
+      context "convert json in and don't stumble over binary out" do
+        before do
+          get '/welcome/non_json_binary_response', json_object,
+            { 'CONTENT-TYPE'         => 'application/json',
+              'request-json-format'  => 'underscore',
+              'response-json-format' => 'underscore' }
+        end
+
+        subject { last_response }
+
+        it { is_expected.to be_successful }
+
+        it 'should be content-type html' do
+          expect(last_response.header['Content-Type']).to eq('image/gif')
+        end
+
+        it 'should show the converted input params as file name content' do
+          expect(last_response.header['Content-Disposition']).
+            to include("user_name")
+
+          expect(last_response.header['Content-Disposition']).
+            to include("lord_füü")
         end
       end
     end

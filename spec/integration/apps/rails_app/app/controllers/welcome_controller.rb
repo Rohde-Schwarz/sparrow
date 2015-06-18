@@ -11,8 +11,14 @@ class WelcomeController < ApplicationController
     render json: {keys: extract_keys, camelCase: false, snake_case: true}
   end
 
-  def non_json_response
+  def non_json_text_response
     render text: "----- BEGIN PUBLIC KEY -----\n#{extract_keys}\n----- END PUBLIC KEY -----"
+  end
+
+  def non_json_binary_response
+    file = File.join(Rails.root, 'app', 'assets', 'images', 'grumpy-cat.gif')
+
+    send_file(file, filename: "#{params}.gif")
   end
 
   def posts
