@@ -16,7 +16,9 @@ class WelcomeController < ApplicationController
   end
 
   def non_json_binary_response
-    send_file(File.join(Rails.root, 'app', 'assets', 'images', 'grumpy-cat.gif'))
+    file = File.join(Rails.root, 'app', 'assets', 'images', 'grumpy-cat.gif')
+
+    send_file(file, filename: "#{params}.gif")
   end
 
   def posts

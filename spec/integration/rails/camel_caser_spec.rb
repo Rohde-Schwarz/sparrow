@@ -125,6 +125,31 @@ describe "camel caser middleware for Rails", type: :rails do
           expect(last_response.header['Content-Type']).to match /text\/html/
         end
       end
+
+      context "convert json in and don't stumble over binary out" do
+        before do
+          get '/welcome/non_json_binary_response', json_object,
+            { 'CONTENT-TYPE'         => 'application/json',
+              'request-json-format'  => 'underscore',
+              'response-json-format' => 'underscore' }
+        end
+
+        subject { last_response }
+
+        it { is_expected.to be_successful }
+
+        it 'should be content-type html' do
+          expect(last_response.header['Content-Type']).to eq('image/gif')
+        end
+
+        it 'should show the converted input params as file name content' do
+          expect(last_response.header['Content-Disposition']).
+            to include("user_name")
+
+          expect(last_response.header['Content-Disposition']).
+            to include("lord_füü")
+        end
+      end
     end
 
     context 'converts GET url parameters' do
