@@ -75,6 +75,8 @@ Example:
 
 ### json_request_format_header
 
+> String
+
 Defines the HTTP Header key which sets the request transformation strategy as in default_json_request_key_transformation_strategy*. This definition has higher priority than the default definition. Any valid HTTP Header String value is possible. Defaults to `request-json-format`.
 
 Example:
