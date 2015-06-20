@@ -5,14 +5,16 @@ module Sparrow
                 :allowed_content_types,
                 :content_type,
                 :excluded_routes,
-                :request
+                :request,
+                :route_parser
 
     def initialize(request, options = {})
       @request               = request
       @allowed_accepts       = options.fetch(:allowed_accepts, [])
       @allowed_content_types = options.fetch(:allowed_content_types, [])
       @excluded_routes       = options.fetch(:excluded_routes, [])
-      @content_type          = options.fetch(:content_type, '')
+      @route_parser          = RouteParser.new(excluded_routes)
+      @content_type = options.fetch(:content_type, request.content_type)
     end
 
     def has_processable_request?
@@ -24,8 +26,7 @@ module Sparrow
     private
 
     def includes_route?
-      path = request.path
-      RouteParser.new(excluded_routes).allow?(path)
+      route_parser.allow?(request.path)
     end
 
     def allowed_content_type?
