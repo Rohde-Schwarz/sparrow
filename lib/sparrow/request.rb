@@ -26,10 +26,11 @@ module Sparrow
     end
 
     def content_type
-      request.content_type ||
+      content_type = request.content_type ||
          env['CONTENT-TYPE'] ||
          env['Content-Type'] ||
          env['CONTENT_TYPE']
+     content_type.split(';').first
     end
 
     def method_missing(method_name, *args)
@@ -38,9 +39,9 @@ module Sparrow
 
     def request_class
       if defined?(Rails)
-        ActionDispatch::Request
+        ::ActionDispatch::Request
       else
-        Rack::Request
+        ::Rack::Request
       end
     end
   end
