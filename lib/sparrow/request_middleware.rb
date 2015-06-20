@@ -1,5 +1,3 @@
-require 'sparrow/middleware'
-
 module Sparrow
   class RequestMiddleware < Middleware
     def convert(env)

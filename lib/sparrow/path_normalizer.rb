@@ -1,5 +1,3 @@
-require 'active_support/core_ext/string/starts_ends_with'
-
 module Sparrow
   module PathNormalizer
     def normalize_path(path)

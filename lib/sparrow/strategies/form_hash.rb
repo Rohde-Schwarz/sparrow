@@ -1,6 +1,3 @@
-require 'active_support/core_ext/object/blank'
-require 'sparrow/transformable'
-
 module Sparrow
   module Strategies
     class FormHash
@@ -39,4 +36,3 @@ module Sparrow
     end
   end
 end
-

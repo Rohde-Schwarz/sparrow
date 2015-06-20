@@ -1,11 +1,13 @@
-require 'active_support/version'
+require 'sparrow/dependencies'
 require 'sparrow/version'
 require 'sparrow/configuration'
+require 'sparrow/path_normalizer'
 require 'sparrow/route_parser'
+require 'sparrow/transformable'
+require 'sparrow/strategies'
+require 'sparrow/middleware'
 require 'sparrow/request_middleware'
 require 'sparrow/response_middleware'
-require 'sparrow/strategies/json_format_strategies/rack_body'
-require 'sparrow/strategies/json_format_strategies/array_strategy'
 require 'sparrow/railtie' if defined?(Rails)
 
 module Sparrow

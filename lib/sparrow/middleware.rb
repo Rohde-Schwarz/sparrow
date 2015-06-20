@@ -1,8 +1,3 @@
-require 'active_support/core_ext/object/blank'
-require 'sparrow/strategies/form_hash'
-require 'sparrow/strategies/raw_input'
-require 'sparrow/strategies/ignore'
-
 module Sparrow
   class Middleware
     attr_reader :app, :body, :status, :headers
@@ -85,4 +80,3 @@ module Sparrow
     end
   end
 end
-

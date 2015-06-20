@@ -1,6 +1,3 @@
-require 'active_support/core_ext/string/starts_ends_with'
-require 'sparrow/path_normalizer'
-
 module Sparrow
   class RouteParser
     include PathNormalizer

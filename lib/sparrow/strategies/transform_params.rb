@@ -1,11 +1,3 @@
-require 'active_support/core_ext/string'
-if ActiveSupport::VERSION::STRING.match(/3\.\d+\.\d+/)
-  require 'sparrow/core_ext/hash'
-end
-
-require 'sparrow/strategies/key_transformation/underscore_key'
-require 'sparrow/strategies/key_transformation/camelize_key'
-
 module Sparrow
   module Strategies
     class TransformParams

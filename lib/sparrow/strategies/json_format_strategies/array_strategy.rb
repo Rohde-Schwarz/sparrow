@@ -1,5 +1,3 @@
-require 'sparrow/strategies/json_format_strategies/json_format_strategy'
-
 module Sparrow
   module Strategies
     class ArrayStrategy < JsonFormatStrategy

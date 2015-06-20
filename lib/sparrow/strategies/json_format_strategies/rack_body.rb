@@ -1,5 +1,3 @@
-require File.dirname(__FILE__) + '/json_format_strategy'
-
 module Sparrow
   module Strategies
     class RackBody < JsonFormatStrategy

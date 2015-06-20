@@ -1,6 +1,3 @@
-require 'active_support/core_ext/object/inclusion'
-require 'sparrow/middleware'
-require 'sparrow/strategies/json_format_strategies/json_format_strategy'
 
 module Sparrow
   class ResponseMiddleware < Middleware

@@ -1,5 +1,3 @@
-require 'singleton'
-
 module Sparrow
   module Strategies
     class DefaultJsonFormatStrategy

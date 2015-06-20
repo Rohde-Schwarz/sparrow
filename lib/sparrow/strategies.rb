@@ -1,0 +1,6 @@
+require 'sparrow/strategies/json_format_strategies'
+require 'sparrow/strategies/key_transformation'
+require 'sparrow/strategies/transform_params'
+require 'sparrow/strategies/form_hash'
+require 'sparrow/strategies/raw_input'
+require 'sparrow/strategies/ignore'
