@@ -1,5 +1,7 @@
 module Sparrow
   class Request
+    FORM_HASH_KEY = 'rack.request.form_hash'
+
     attr_reader :env,
                 :request
 
@@ -11,8 +13,16 @@ module Sparrow
       @request ||= request_class.new(env)
     end
 
+    def form_hash?
+      env[FORM_HASH_KEY].present?
+    end
+
     def path
       request.path || env['PATH_INFO']
+    end
+
+    def accept
+      env['ACCEPT'] || env['Accept']
     end
 
     def content_type

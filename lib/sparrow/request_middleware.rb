@@ -12,7 +12,7 @@ module Sparrow
 
     def strategy
       if steward.has_processable_request? &&
-          last_env[Strategies::FormHash::REQUEST_FORM_HASH_KEY]
+          request.form_hash?
         Sparrow.logger.debug 'Choosing strategy FormHash'
         Strategies::FormHash
       else

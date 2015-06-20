@@ -1,7 +1,6 @@
 module Sparrow
   module Strategies
     class FormHash
-      REQUEST_FORM_HASH_KEY = 'rack.request.form_hash'
       include Transformable
 
       attr_reader :env, :type
@@ -22,7 +21,7 @@ module Sparrow
       end
 
       def params
-        @params || env[REQUEST_FORM_HASH_KEY]
+        @params || env[Sparrow::Request::FORM_HASH_KEY]
       end
 
       private
@@ -30,7 +29,7 @@ module Sparrow
       def handle_form_hash
         if params.present?
           transformed_params = transform_params
-          @env[REQUEST_FORM_HASH_KEY] = transformed_params
+          @env[Sparrow::Request::FORM_HASH_KEY] = transformed_params
         end
       end
     end

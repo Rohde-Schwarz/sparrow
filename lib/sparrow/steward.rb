@@ -4,11 +4,11 @@ module Sparrow
     attr_reader :allowed_accepts,
                 :allowed_content_types,
                 :content_type,
-                :env,
-                :excluded_routes
+                :excluded_routes,
+                :request
 
-    def initialize(env, options = {})
-      @env                   = env
+    def initialize(request, options = {})
+      @request               = request
       @allowed_accepts       = options.fetch(:allowed_accepts, [])
       @allowed_content_types = options.fetch(:allowed_content_types, [])
       @excluded_routes       = options.fetch(:excluded_routes, [])
@@ -23,10 +23,6 @@ module Sparrow
 
     private
 
-    def request
-      @request ||= Request.new(env)
-    end
-
     def includes_route?
       path = request.path
       RouteParser.new(excluded_routes).allow?(path)
@@ -37,7 +33,7 @@ module Sparrow
     end
 
     def allowed_accept_header?
-      accept_header = env['ACCEPT'] || env['Accept']
+      accept_header = request.accept
 
       allowed_accepts.include?(nil) ||
         accept_type_matches?(allowed_accepts, accept_header)

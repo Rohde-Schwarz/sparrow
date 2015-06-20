@@ -21,7 +21,7 @@ module Sparrow
     private
 
     def steward
-      @steward                 = Steward.new(last_env,
+      Steward.new(request,
         allowed_content_types: Sparrow.configuration.allowed_content_types,
         allowed_accepts:       Sparrow.configuration.allowed_accepts,
         excluded_routes:       Sparrow.configuration.excluded_routes,
