@@ -24,17 +24,11 @@ module Sparrow
     private
 
     def request
-      request_class = if defined?(Rails) then
-                        ActionDispatch::Request
-                      else
-                        Rack::Request
-                      end
-
-      @request ||= request_class.new(env)
+      @request ||= Request.new(env)
     end
 
     def includes_route?
-      path = request.path || env['PATH_INFO']
+      path = request.path
       RouteParser.new(excluded_routes).allow?(path)
     end
 

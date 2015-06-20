@@ -7,12 +7,7 @@ module Sparrow
     end
 
     def content_type
-      my_content_type = request.content_type ||
-          last_env['CONTENT-TYPE'] ||
-          last_env['Content-Type'] ||
-          last_env['CONTENT_TYPE']
-
-      my_content_type.presence
+      request.content_type.presence
     end
 
     def strategy

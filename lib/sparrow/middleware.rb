@@ -44,13 +44,7 @@ module Sparrow
     end
 
     def request
-      request_class = if defined?(Rails) then
-                        ActionDispatch::Request
-                      else
-                        Rack::Request
-                      end
-
-      request_class.new(last_env)
+      Request.new(last_env)
     end
   end
 end
