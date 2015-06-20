@@ -117,7 +117,16 @@ Example:
 Same as [allowed_content_types], but reacts to the HTTP Accept Header. Applies to the same possible options, behavior. Defaults to the same set of MIME types, but also includes `nil` by default, which ignores checking the Accept header in default configuration
 
 Example:
-> `config.allowed_accepts = **'application/json', 'text/x-json']`
+> `config.allowed_accepts = ['application/json', 'text/x-json']`
+
+### enable_logging
+
+> Boolean
+
+Determines logging while the middleware is active. Primary output is which conversion strategy gets chosen upon which request/response.
+
+Example:
+> `config.enable_logging = true`
 
 ## Tests
 
