@@ -17,7 +17,7 @@ module Sparrow
 
     def strategy
       if is_processable? && last_env[Strategies::FormHash::REQUEST_FORM_HASH_KEY]
-        Rails.logger.debug 'Choosing strategy FormHash' if defined? Rails
+        Sparrow.logger.debug 'Choosing strategy FormHash'
         Strategies::FormHash
       else
         super

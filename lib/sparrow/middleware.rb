@@ -18,13 +18,14 @@ module Sparrow
     private
 
     def strategy
-      if is_processable?
-        Rails.logger.debug 'Choosing strategy RawInput' if defined? Rails
+      strategy = if is_processable?
         Strategies::RawInput
       else
-        Rails.logger.debug 'Choosing strategy Ignore' if defined? Rails
         Strategies::Ignore
       end
+
+      Sparrow.logger.debug("Choosing strategy #{strategy.class.name}")
+      strategy
     end
 
     def is_processable?

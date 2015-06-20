@@ -8,6 +8,7 @@ require 'sparrow/strategies'
 require 'sparrow/middleware'
 require 'sparrow/request_middleware'
 require 'sparrow/response_middleware'
+require 'sparrow/logger'
 require 'sparrow/railtie' if defined?(Rails)
 
 module Sparrow
@@ -22,6 +23,10 @@ module Sparrow
 
     def reset_configuration
       @configuration = nil
+    end
+
+    def logger
+      @logger ||= Logger.new(configuration.enable_logging)
     end
   end
 end
