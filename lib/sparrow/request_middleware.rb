@@ -12,11 +12,12 @@ module Sparrow
           last_env['Content-Type'] ||
           last_env['CONTENT_TYPE']
 
-      my_content_type.present? ? my_content_type : nil
+      my_content_type.presence
     end
 
     def strategy
-      if is_processable? && last_env[Strategies::FormHash::REQUEST_FORM_HASH_KEY]
+      if steward.has_processable_request? &&
+          last_env[Strategies::FormHash::REQUEST_FORM_HASH_KEY]
         Sparrow.logger.debug 'Choosing strategy FormHash'
         Strategies::FormHash
       else
