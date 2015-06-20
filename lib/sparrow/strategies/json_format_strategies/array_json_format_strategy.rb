@@ -1,6 +1,6 @@
 module Sparrow
   module Strategies
-    class ArrayStrategy < JsonFormatStrategy
+    class ArrayJsonFormatStrategy < JsonFormatStrategy
       register_json_format
 
       def match?(input)

@@ -1,10 +1,10 @@
 module Sparrow
   module Strategies
-    class UnderscoreKey
-      include KeyNormalizer
-
-      def transform_key(key)
-        normalize_key(key).underscore
+    module KeyTransformation
+      class UnderscoreKey
+        def transform_key(key)
+          key.to_s.underscore
+        end
       end
     end
   end

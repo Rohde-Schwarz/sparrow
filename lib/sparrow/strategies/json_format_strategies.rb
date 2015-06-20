@@ -1,4 +1,4 @@
 require 'sparrow/strategies/json_format_strategies/default_json_format_strategy'
 require 'sparrow/strategies/json_format_strategies/json_format_strategy'
-require 'sparrow/strategies/json_format_strategies/array_strategy'
-require 'sparrow/strategies/json_format_strategies/rack_body'
+require 'sparrow/strategies/json_format_strategies/array_json_format_strategy'
+require 'sparrow/strategies/json_format_strategies/rack_body_json_format_strategy'

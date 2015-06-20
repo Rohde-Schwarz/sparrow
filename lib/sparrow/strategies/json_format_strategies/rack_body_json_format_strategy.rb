@@ -1,6 +1,6 @@
 module Sparrow
   module Strategies
-    class RackBody < JsonFormatStrategy
+    class RackBodyJsonFormatStrategy < JsonFormatStrategy
       register_json_format
 
       def match?(input)
