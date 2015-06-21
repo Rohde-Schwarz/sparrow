@@ -1,4 +1,4 @@
-Copyright (c) 2014 Daniel Schmidt
+Copyright (c) 2014 gateprotect GmbH
 
 MIT License
 
