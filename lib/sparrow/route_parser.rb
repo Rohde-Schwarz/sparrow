@@ -1,7 +1,5 @@
 module Sparrow
   class RouteParser
-    include PathNormalizer
-
     attr_accessor :excluded_routes
 
     def initialize(excluded_routes = Sparrow.configuration.excluded_routes)
@@ -24,6 +22,12 @@ module Sparrow
         return true if normalized_path =~ route
       end
       return false
+    end
+
+    private
+    def normalize_path(path)
+      path[/./m] = '' if path.starts_with?('/')
+      path
     end
   end
 end

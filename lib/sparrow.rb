@@ -1,7 +1,6 @@
 require 'sparrow/dependencies'
 require 'sparrow/version'
 require 'sparrow/configuration'
-require 'sparrow/path_normalizer'
 require 'sparrow/route_parser'
 require 'sparrow/transformable'
 require 'sparrow/strategies'
