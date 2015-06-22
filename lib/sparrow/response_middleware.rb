@@ -1,6 +1,3 @@
-require 'active_support/core_ext/object/inclusion'
-require 'sparrow/middleware'
-require 'sparrow/strategies/json_format_strategies/json_format_strategy'
 
 module Sparrow
   class ResponseMiddleware < Middleware
@@ -35,7 +32,7 @@ module Sparrow
     end
 
     def content_type
-      headers['Content-Type'].split(';').first #||
+      headers['Content-Type'].split(';').first # ||
           # last_env['CONTENT-TYPE'] ||
           # last_env['Content-Type'] ||
           # last_env['CONTENT_TYPE']

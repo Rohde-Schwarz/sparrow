@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
 such as camelCase and snake_case. Both converting responses and requests are
 supported.
   }
-  spec.homepage    = ""
+  spec.homepage    = "https://github.com/GateprotectGmbH/sparrow"
   spec.license     = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")

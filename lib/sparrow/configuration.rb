@@ -7,9 +7,11 @@ module Sparrow
                   :default_json_response_key_transformation_strategy,
                   :camelize_ignore_uppercase_keys,
                   :allowed_content_types,
-                  :allowed_accepts
+                  :allowed_accepts,
+                  :enable_logging
 
     def initialize
+      @enable_logging                                    = false
       @json_request_format_header                        = 'request-json-format'
       @json_response_format_header                       = 'response-json-format'
       @excluded_routes                                   = []

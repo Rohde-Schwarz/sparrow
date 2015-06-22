@@ -1,11 +1,9 @@
-require 'active_support/core_ext/object/blank'
-require 'sparrow/strategies/form_hash'
-require 'sparrow/strategies/raw_input'
-require 'sparrow/strategies/ignore'
-
 module Sparrow
   class Middleware
-    attr_reader :app, :body, :status, :headers
+    attr_reader :app,
+                :body,
+                :headers,
+                :status
 
     def initialize(app)
       @app = app
@@ -22,34 +20,23 @@ module Sparrow
 
     private
 
+    def steward
+      Steward.new(request,
+        allowed_content_types: Sparrow.configuration.allowed_content_types,
+        allowed_accepts:       Sparrow.configuration.allowed_accepts,
+        excluded_routes:       Sparrow.configuration.excluded_routes,
+        content_type:          content_type)
+    end
+
     def strategy
-      if is_processable?
-        Rails.logger.debug 'Choosing strategy RawInput' if defined? Rails
-        Strategies::RawInput
-      else
-        Rails.logger.debug 'Choosing strategy Ignore' if defined? Rails
-        Strategies::Ignore
-      end
-    end
+      strategy = if steward.has_processable_request?
+                   Strategies::RawInput
+                 else
+                   Strategies::Ignore
+                 end
 
-    def is_processable?
-      accepted_content_type? && accepted_accept_header? && includes_route?
-    end
-
-    def includes_route?
-      path = request.path || last_env['PATH_INFO']
-      RouteParser.new.allow?(path)
-    end
-
-    def accepted_content_type?
-      content_type_equals?(content_type) || content_type_matches?(content_type)
-    end
-
-    def accepted_accept_header?
-      allowed_accepts = Sparrow.configuration.allowed_accepts
-      accept_header = last_env['ACCEPT'] || last_env['Accept']
-
-      allowed_accepts.include?(nil) || accept_type_matches?(allowed_accepts, accept_header)
+      Sparrow.logger.debug("Choosing strategy #{strategy.class.name}")
+      strategy
     end
 
     def last_env
@@ -57,32 +44,7 @@ module Sparrow
     end
 
     def request
-      request_class = if defined?(Rails) then
-                        ActionDispatch::Request
-                      else
-                        Rack::Request
-                      end
-
-      request_class.new(last_env)
-    end
-
-    def content_type_equals?(type)
-      Sparrow.configuration.allowed_content_types.include?(type)
-    end
-
-    def content_type_matches?(type)
-      matches = Sparrow.configuration.allowed_content_types.map do |acceptable_content_type|
-        (acceptable_content_type && type.to_s.starts_with?(acceptable_content_type.to_s))
-      end
-
-      matches.any?
-    end
-
-    def accept_type_matches?(accepted_headers, type)
-      accepted_headers.detect do |accept|
-        type.include?(accept)
-      end
+      Request.new(last_env)
     end
   end
 end
-

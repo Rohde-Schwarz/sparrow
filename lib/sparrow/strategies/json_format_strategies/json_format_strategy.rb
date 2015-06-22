@@ -1,6 +1,3 @@
-require 'sparrow/strategies/json_format_strategies/default_json_format_strategy'
-require 'active_support/core_ext/object/blank'
-
 module Sparrow
   module Strategies
     class JsonFormatStrategy

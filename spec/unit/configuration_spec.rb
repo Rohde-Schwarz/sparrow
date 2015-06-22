@@ -6,6 +6,7 @@ module Sparrow
     its(:json_response_format_header) do
       is_expected.to eq 'response-json-format'
     end
+    its(:enable_logging) { is_expected.to be false }
     its(:excluded_routes) { is_expected.to eq [] }
     its(:default_json_request_key_transformation_strategy) do
       is_expected.to eq :camelize

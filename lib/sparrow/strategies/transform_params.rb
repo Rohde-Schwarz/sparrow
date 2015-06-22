@@ -1,11 +1,3 @@
-require 'active_support/core_ext/string'
-if ActiveSupport::VERSION::STRING.match(/3\.\d+\.\d+/)
-  require 'sparrow/core_ext/hash'
-end
-
-require 'sparrow/strategies/key_transformation/underscore_key'
-require 'sparrow/strategies/key_transformation/camelize_key'
-
 module Sparrow
   module Strategies
     class TransformParams
@@ -30,7 +22,9 @@ module Sparrow
 
       def create_key_transformation_strategy(key_transformation_strategy_buzzword)
         class_name = "#{key_transformation_strategy_buzzword.to_s}_key".camelize
-        strategy_class = "Sparrow::Strategies::#{class_name}".constantize
+        full_strategy_class_name =
+          "Sparrow::Strategies::KeyTransformation::#{class_name}"
+        strategy_class = full_strategy_class_name.constantize
         strategy_class.new
       end
     end

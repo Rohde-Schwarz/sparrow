@@ -1,5 +1,3 @@
-require 'sparrow/middleware'
-
 module Sparrow
   class RequestMiddleware < Middleware
     def convert(env)
@@ -9,17 +7,13 @@ module Sparrow
     end
 
     def content_type
-      my_content_type = request.content_type ||
-          last_env['CONTENT-TYPE'] ||
-          last_env['Content-Type'] ||
-          last_env['CONTENT_TYPE']
-
-      my_content_type.present? ? my_content_type : nil
+      request.content_type.presence
     end
 
     def strategy
-      if is_processable? && last_env[Strategies::FormHash::REQUEST_FORM_HASH_KEY]
-        Rails.logger.debug 'Choosing strategy FormHash' if defined? Rails
+      if steward.has_processable_request? &&
+          request.form_hash?
+        Sparrow.logger.debug 'Choosing strategy FormHash'
         Strategies::FormHash
       else
         super
