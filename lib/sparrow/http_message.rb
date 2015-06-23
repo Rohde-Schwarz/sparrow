@@ -1,6 +1,7 @@
 module Sparrow
-  class Request
+  class HttpMessage
     FORM_HASH_KEY = 'rack.request.form_hash'
+    RACK_INPUT_KEY = 'rack.input'
 
     attr_reader :env,
                 :request

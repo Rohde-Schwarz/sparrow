@@ -64,5 +64,13 @@ module Sparrow
       env['QUERY_STRING'] = transformed_hash.to_param
     end
 
+    private
+    def rack_input_key
+      Sparrow::HttpMessage::RACK_INPUT_KEY
+    end
+
+    def form_hash_key
+      Sparrow::HttpMessage::FORM_HASH_KEY
+    end
   end
 end

@@ -1,23 +1,23 @@
 module Sparrow
-  # Shall requests/responses be processed?
+  # Shall http messages be processed?
   class Steward
     attr_reader :allowed_accepts,
                 :allowed_content_types,
                 :content_type,
                 :excluded_routes,
-                :request,
+                :http_message,
                 :route_parser
 
-    def initialize(request, options = {})
-      @request               = request
+    def initialize(http_message, options = {})
+      @http_message          = http_message
       @allowed_accepts       = options.fetch(:allowed_accepts, [])
       @allowed_content_types = options.fetch(:allowed_content_types, [])
       @excluded_routes       = options.fetch(:excluded_routes, [])
       @route_parser          = RouteParser.new(excluded_routes)
-      @content_type = options.fetch(:content_type, request.content_type)
+      @content_type = options.fetch(:content_type, http_message.content_type)
     end
 
-    def has_processable_request?
+    def has_processable_http_message?
       allowed_content_type? &&
         allowed_accept_header? &&
           includes_route?
@@ -26,7 +26,7 @@ module Sparrow
     private
 
     def includes_route?
-      route_parser.allow?(request.path)
+      route_parser.allow?(http_message.path)
     end
 
     def allowed_content_type?
@@ -34,7 +34,7 @@ module Sparrow
     end
 
     def allowed_accept_header?
-      accept_header = request.accept
+      accept_header = http_message.accept
 
       allowed_accepts.include?(nil) ||
         accept_type_matches?(allowed_accepts, accept_header)

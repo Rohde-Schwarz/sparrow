@@ -3,7 +3,8 @@ module Sparrow
     class FormHash
       include Transformable
 
-      attr_reader :env, :type
+      attr_reader :env,
+                  :type
 
       def self.handle(env, type)
         self.new(env, type).handle
@@ -21,16 +22,13 @@ module Sparrow
       end
 
       def params
-        @params || env[Sparrow::Request::FORM_HASH_KEY]
+        @params || env[form_hash_key]
       end
 
       private
 
       def handle_form_hash
-        if params.present?
-          transformed_params = transform_params
-          @env[Sparrow::Request::FORM_HASH_KEY] = transformed_params
-        end
+        env[form_hash_key] = transform_params if params.present?
       end
     end
   end

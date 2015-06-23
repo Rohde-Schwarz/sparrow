@@ -10,8 +10,8 @@ module Sparrow
       end
 
       def params
-        ret = @params || @env['rack.input'].send(:read)
-        @env['rack.input'].rewind
+        ret = @params || @env[rack_input_key].send(:read)
+        @env[rack_input_key].rewind
         ret
       end
 
@@ -21,14 +21,14 @@ module Sparrow
 
       def handle
         # synchronize rack.input and form hash values
-        input = @env['rack.input'].gets
+        input = @env[rack_input_key].gets
 
         begin
-          @env['rack.request.form_hash'] = MultiJson.load(input)
+          @env[form_hash_key] = MultiJson.load(input)
         rescue MultiJson::ParseError
           # ignore
         ensure
-          @env['rack.input'].rewind
+          @env[rack_input_key].rewind
         end if input.present?
 
         @env

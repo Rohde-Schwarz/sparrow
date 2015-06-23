@@ -3,7 +3,8 @@ module Sparrow
     class RawInput
       include Transformable
 
-      attr_reader :env, :type
+      attr_reader :env,
+                  :type
 
       def self.handle(env, type)
         self.new(env, type).handle
@@ -24,7 +25,7 @@ module Sparrow
         if @params
           @params
         else
-          input_io = @env['rack.input']
+          input_io = @env[rack_input_key]
           params   = input_io.send(:read)
           input_io.rewind
           params
@@ -36,8 +37,8 @@ module Sparrow
       def handle_raw_rack
         if params.present?
           new_raw_input      = json_body.force_encoding("BINARY")
-          @env['rack.input'] = StringIO.new(new_raw_input)
-          @env['rack.input'].rewind
+          @env[rack_input_key] = StringIO.new(new_raw_input)
+          @env[rack_input_key].rewind
           @env['CONTENT_LENGTH'] = new_raw_input.length
         end
       end

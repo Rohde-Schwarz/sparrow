@@ -21,7 +21,7 @@ module Sparrow
     private
 
     def steward
-      Steward.new(request,
+      Steward.new(http_message,
         allowed_content_types: Sparrow.configuration.allowed_content_types,
         allowed_accepts:       Sparrow.configuration.allowed_accepts,
         excluded_routes:       Sparrow.configuration.excluded_routes,
@@ -29,7 +29,7 @@ module Sparrow
     end
 
     def strategy
-      strategy = if steward.has_processable_request?
+      strategy = if steward.has_processable_http_message?
                    Strategies::RawInput
                  else
                    Strategies::Ignore
@@ -43,8 +43,8 @@ module Sparrow
       @last_env || {}
     end
 
-    def request
-      Request.new(last_env)
+    def http_message
+      HttpMessage.new(last_env)
     end
   end
 end
