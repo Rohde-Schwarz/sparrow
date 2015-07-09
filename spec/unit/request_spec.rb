@@ -21,6 +21,13 @@ module Sparrow
       it 'takes the content type until the ;' do
         expect(request.content_type).to eq 'application/json'
       end
+
+      context 'without env' do
+        let(:env) { {} }
+        it 'allows an unset content type' do
+          expect(request.content_type).to eq nil
+        end
+      end
     end
 
     it 'wraps the environment hash' do
