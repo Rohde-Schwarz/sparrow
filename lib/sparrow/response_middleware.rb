@@ -8,10 +8,10 @@ module Sparrow
     end
 
     def converted_response_body
-      response_body = Sparrow::Strategies::JsonFormatStrategy.convert(body)
+      # return the original body if we are not going to process it
+      return body if unprocessable_status?
 
-      # just pass the response if something went wrong inside the application
-      return response_body if unprocessable_status?
+      response_body = Sparrow::Strategies::JsonFormatStrategy.convert(body)
 
       if response_body.present?
         response_strategy = strategy.new(last_env, :response, response_body)
