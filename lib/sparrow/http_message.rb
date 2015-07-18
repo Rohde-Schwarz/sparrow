@@ -31,7 +31,7 @@ module Sparrow
          env['CONTENT-TYPE'] ||
          env['Content-Type'] ||
          env['CONTENT_TYPE']
-     content_type.split(';').first
+     content_type.to_s.split(';').first
     end
 
     def method_missing(method_name, *args)
