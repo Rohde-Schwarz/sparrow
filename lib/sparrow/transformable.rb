@@ -25,7 +25,7 @@ module Sparrow
 
     private
     def json_format
-      if respond_to?(:env) then
+      if respond_to?(:env)
         env[Sparrow.configuration.json_format_header(type)]
       else
         nil
