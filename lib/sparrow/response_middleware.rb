@@ -13,18 +13,12 @@ module Sparrow
 
       response_body = Sparrow::Strategies::JsonFormatStrategy.convert(body)
 
-      if response_body.present?
-        response_strategy = strategy.new(last_env, :response, response_body)
-        response_strategy.handle
+      return [] unless response_body.present?
 
-        if response_body.is_a?(Array) then
-          response_body
-        else
-          Array(response_strategy.json_body)
-        end
-      else
-        []
-      end
+      @headers.delete 'Content-Length'
+      response_strategy = strategy.new(last_env, :response, response_body)
+      response_strategy.handle
+      Array(response_strategy.json_body)
     end
 
     def unprocessable_status?
