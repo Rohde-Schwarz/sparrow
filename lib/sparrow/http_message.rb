@@ -19,19 +19,15 @@ module Sparrow
     end
 
     def path
-      request.path || env['PATH_INFO']
+      request.path || http_header(:path_info)
     end
 
     def accept
-      env['ACCEPT'] || env['Accept']
+      http_header(:accept)
     end
 
     def content_type
-      content_type = request.content_type ||
-         env['CONTENT-TYPE'] ||
-         env['Content-Type'] ||
-         env['CONTENT_TYPE']
-     content_type.to_s.split(';').first
+      request.content_type || http_header(:content_type)
     end
 
     def method_missing(method_name, *args)
@@ -44,6 +40,22 @@ module Sparrow
       else
         ::Rack::Request
       end
+    end
+
+    private
+    def http_header(key)
+      key = key.to_s
+      header_key = [
+          key,
+          key.upcase,
+          key.upcase.dasherize,
+          key.humanize,
+          key.dasherize,
+          key.parameterize,
+          key.underscore.split('_').map(&:humanize).join('-')
+      ].detect { |k| env[k].present? }
+
+      env[header_key].to_s.split(';').first
     end
   end
 end

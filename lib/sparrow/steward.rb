@@ -14,7 +14,6 @@ module Sparrow
       @allowed_content_types = options.fetch(:allowed_content_types, [])
       @excluded_routes       = options.fetch(:excluded_routes, [])
       @route_parser          = RouteParser.new(excluded_routes)
-      @content_type = options.fetch(:content_type, http_message.content_type)
     end
 
     def has_processable_http_message?
@@ -30,6 +29,7 @@ module Sparrow
     end
 
     def allowed_content_type?
+      content_type = http_message.content_type
       content_type_equals?(content_type) || content_type_matches?(content_type)
     end
 

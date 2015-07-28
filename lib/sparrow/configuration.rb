@@ -8,7 +8,8 @@ module Sparrow
                   :camelize_ignore_uppercase_keys,
                   :allowed_content_types,
                   :allowed_accepts,
-                  :enable_logging
+                  :enable_logging,
+                  :ignored_response_codes
 
     def initialize
       @enable_logging                                    = false
@@ -25,6 +26,7 @@ module Sparrow
       ]
 
       @allowed_accepts = @allowed_content_types + [nil]
+      @ignored_response_codes = [404] + (500..511).to_a
     end
 
     def json_format_header(type)

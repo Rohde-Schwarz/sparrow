@@ -1,9 +1,8 @@
-
 module Sparrow
   class ResponseMiddleware < Middleware
     def call(env)
-      @last_env                = env
-      @status, @headers, @body = @app.call(env)
+      @last_env = env
+      @status, @headers, @body = app.call(env)
       [status, headers, converted_response_body]
     end
 
@@ -17,7 +16,7 @@ module Sparrow
         response_strategy = strategy.new(last_env, :response, response_body)
         response_strategy.handle
 
-        if response_body.is_a?(Array) then
+        if response_body.is_a?(Array)
           response_body
         else
           Array(response_strategy.json_body)
@@ -28,14 +27,7 @@ module Sparrow
     end
 
     def unprocessable_status?
-      @status.in?(500..511) || @status == 404
-    end
-
-    def content_type
-      headers['Content-Type'].split(';').first # ||
-          # last_env['CONTENT-TYPE'] ||
-          # last_env['Content-Type'] ||
-          # last_env['CONTENT_TYPE']
+      @status.in?(ignored_response_codes)
     end
   end
 end

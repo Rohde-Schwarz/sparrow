@@ -3,14 +3,16 @@ module Sparrow
     attr_reader :app,
                 :body,
                 :headers,
-                :status
+                :status,
+                :ignored_response_codes
 
     def initialize(app)
-      @app = app
+      @app                    = app
+      @ignored_response_codes = Sparrow.configuration.ignored_response_codes
     end
 
     def call(env)
-      @last_env                = env
+      @last_env = env
       @status, @headers, @body = @app.call(convert(env))
     end
 
@@ -22,10 +24,9 @@ module Sparrow
 
     def steward
       Steward.new(http_message,
-        allowed_content_types: Sparrow.configuration.allowed_content_types,
-        allowed_accepts:       Sparrow.configuration.allowed_accepts,
-        excluded_routes:       Sparrow.configuration.excluded_routes,
-        content_type:          content_type)
+                  allowed_content_types: Sparrow.configuration.allowed_content_types,
+                  allowed_accepts: Sparrow.configuration.allowed_accepts,
+                  excluded_routes: Sparrow.configuration.excluded_routes)
     end
 
     def strategy
@@ -35,7 +36,7 @@ module Sparrow
                    Strategies::Ignore
                  end
 
-      Sparrow.logger.debug("Choosing strategy #{strategy.class.name}")
+      Sparrow.logger.debug("Choosing strategy #{strategy.name}")
       strategy
     end
 
