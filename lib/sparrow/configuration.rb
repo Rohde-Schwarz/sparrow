@@ -11,6 +11,8 @@ module Sparrow
                   :enable_logging,
                   :ignored_response_codes
 
+    ##
+    # Initializes a new Configuration with default parameters
     def initialize
       @enable_logging                                    = false
       @json_request_format_header                        = 'request-json-format'
@@ -29,10 +31,21 @@ module Sparrow
       @ignored_response_codes = [404] + (500..511).to_a
     end
 
+    ##
+    # @param type [String] the http message type.
+    #   Must be either 'request' or 'response'.
+    # @return [String] the configuration value for the json_format_header for
+    #   the given http message type
     def json_format_header(type)
       public_send("json_#{type}_format_header")
     end
 
+    ##
+    # the default json_key_transformation_strategy option for the given
+    # http message type
+    # @param type [String] http message type. Must be either 'request' or
+    #   'response'
+    # @return [String] the configuration option value
     def default_json_key_transformation_strategy(type)
       public_send("default_json_#{type}_key_transformation_strategy")
     end

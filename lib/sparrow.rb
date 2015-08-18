@@ -14,18 +14,24 @@ require 'sparrow/railtie' if defined?(Rails)
 
 module Sparrow
   class << self
+    # Yields the configuration
     def configure
       yield configuration
     end
 
+    # @return [Configuration] the configuration
     def configuration
       @configuration ||= Configuration.new
     end
 
+    # resets the configuration values to their defaults, i.e.
+    # reinitializes the Configuration object without any arguments
+    # @return [Configuration] the (new initial) configuration
     def reset_configuration
-      @configuration = nil
+      @configuration = Configuration.new
     end
 
+    # @return [Logger] the middleware's logger
     def logger
       @logger ||= Logger.new(configuration.enable_logging)
     end
