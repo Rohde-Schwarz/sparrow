@@ -20,11 +20,7 @@ module Sparrow
     # Creates a new Middleware object
     # @param [#call] app the Rack application as defined by. Any object that
     #   responds to #call as defined in {https://rack.github.io/}.
-    # @param [Array<Integer>] ignored_response_codes List of HTTP Status codes
-    #   that shall not be processed
-    def initialize(app,
-                   ignored_response_codes:
-                       Sparrow.configuration.ignored_response_codes)
+    def initialize(app)
       @app                    = app
       @ignored_response_codes = ignored_response_codes
     end
@@ -49,9 +45,10 @@ module Sparrow
 
     def steward
       Steward.new(http_message,
-                  allowed_content_types: Sparrow.configuration.allowed_content_types,
-                  allowed_accepts:       Sparrow.configuration.allowed_accepts,
-                  excluded_routes:       Sparrow.configuration.excluded_routes)
+                  allowed_content_types:  Sparrow.configuration.allowed_content_types,
+                  allowed_accepts:        Sparrow.configuration.allowed_accepts,
+                  excluded_routes:        Sparrow.configuration.excluded_routes,
+                  ignored_response_codes: Sparrow.configuration.ignored_response_codes)
     end
 
     def strategy
@@ -67,10 +64,6 @@ module Sparrow
 
     def last_env
       @last_env || {}
-    end
-
-    def http_message
-      HttpMessage.new(last_env)
     end
   end
 end

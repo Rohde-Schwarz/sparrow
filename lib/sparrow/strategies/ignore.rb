@@ -26,8 +26,8 @@ module Sparrow
       # Checks env['rack.input']
       # @return [Hash] the params
       def params
-        ret = @params || @env[rack_input_key].send(:read)
-        @env[rack_input_key].rewind
+        ret = @params || @env[HttpMessage::RACK_INPUT_KEY].send(:read)
+        @env[HttpMessage::RACK_INPUT_KEY].rewind
         ret
       end
 
@@ -43,14 +43,14 @@ module Sparrow
       # @return [Hash] the rack env
       def handle
         # synchronize rack.input and form hash values
-        input = @env[rack_input_key].gets
+        input = @env[HttpMessage::RACK_INPUT_KEY].gets
 
         begin
-          @env[form_hash_key] = MultiJson.load(input)
+          @env[HttpMessage::FORM_HASH_KEY] = MultiJson.load(input)
         rescue MultiJson::ParseError
           # ignore
         ensure
-          @env[rack_input_key].rewind
+          @env[HttpMessage::RACK_INPUT_KEY].rewind
         end if input.present?
 
         @env

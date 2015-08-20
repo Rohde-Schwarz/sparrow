@@ -25,7 +25,8 @@ If you're using Rails, that's it. You haven't to do anything more. If you're not
 ```rb
 require 'sparrow'
 
-use Sparrow::Middleware
+use Sparrow::RequestMiddleware
+use Sparrow::ResponseMiddleware
 ```
 
 ## Configuration
@@ -127,6 +128,16 @@ Determines logging while the middleware is active. Primary output is which conve
 
 Example:
 `config.enable_logging = true`
+
+### camelize_strategy
+
+> `Symbol`. Default: `:lower`
+
+Defines which strategy to use when camelizing keys. Possible options are `:lower` and `:upper`, which tells the middleware to 
+start camelized keys with an uppercased character or with a lowercased character.
+
+Example:
+`config.camelize_strategy = :lower`
 
 ## Tests
 

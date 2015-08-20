@@ -12,34 +12,38 @@ module Sparrow
         # @return [Boolean] Defines wether complete uppercased keys will be
         #   transformed
         # @see #initialize
-        attr_accessor :camelize_uppercase_keys
+        attr_accessor :camelize_ignore_uppercase_keys
 
         ##
         # Initialize a new CamelizeKey strategy
-        # @param [Symbol] strategy the camelizing strategy type.
+        # @param [Hash] options
+        #  +strategy+ defines the camelizing strategy type.
         #  Defines how to camelize, which comes down to starting with a
         #  lowercased character or with an
         #  uppercased character. Thus possible values are :lower and :upper
-        # @param [Boolean] camelize_uppercase_keys Defines if already completely
-        #  uppercased keys should also be transformed. I.e. JSON stays if this
-        #  is set to true. If it is set to false JSON will be transformed to
-        #  Json.
-        def initialize(strategy = :lower, camelize_uppercase_keys = true)
-          self.strategy                = strategy
-          self.camelize_uppercase_keys = camelize_uppercase_keys
+        #
+        #  +camelize_ignore_uppercase_keys+ Defines if already completely
+        #  uppercased keys should not be transformed. I.e. JSON stays JSON if
+        #  this is set to true. If it is set to false JSON will be transformed
+        #  to Json.
+        def initialize(options = {})
+          self.strategy                       = options.fetch(:strategy, :lower)
+          self.camelize_ignore_uppercase_keys =
+              options.fetch(:camelize_ignore_uppercase_keys, true)
         end
 
         ##
         # Transform the given key to camelCase based on the configuration
         # options set on initialization.
         # @see #initialize
-        # @param [String] key the key value to be transformed
+        # @param [String, #to_s] key the key value to be transformed
         # @return [String] the transformed key
         def transform_key(key)
-          if camelize_uppercase_keys && key.upcase == key
-            key.to_s
+          key = key.to_s
+          if camelize_ignore_uppercase_keys && key.upcase == key
+            key
           else
-            key.to_s.camelize(strategy)
+            key.camelize(strategy)
           end
         end
       end

@@ -37,8 +37,9 @@ module Sparrow
     def ensure_json
       json_params = if !params.is_a?(Hash)
                       Sparrow::Strategies::JsonFormatStrategy.convert(params)
-                    elsif params.is_a?(Hash) && params.values == [nil] &&
-                      params.keys.length == 1
+                    elsif params.is_a?(Hash) &&
+                        params.values == [nil] &&
+                        params.keys.length == 1
                       params.keys.first
                     else
                       params
@@ -56,8 +57,13 @@ module Sparrow
     end
 
     def transform_params_strategy
-      transform_params = Sparrow::Strategies::TransformParams
-      transform_params.new(transform_strategy)
+      transform_strategy_options = {
+          camelize_ignore_uppercase_keys: Sparrow.configuration.camelize_ignore_uppercase_keys,
+          camelize_strategy:              Sparrow.configuration.camelize_strategy
+
+      }
+      transform_params           = Sparrow::Strategies::TransformParams
+      transform_params.new(transform_strategy, transform_strategy_options)
     end
 
     ##
@@ -68,14 +74,6 @@ module Sparrow
       env['QUERY_STRING'] = transformed_hash.to_param
     end
 
-    private
-    def rack_input_key
-      Sparrow::HttpMessage::RACK_INPUT_KEY
-    end
-
-    def form_hash_key
-      Sparrow::HttpMessage::FORM_HASH_KEY
-    end
     def transform_strategy
       default  =
           Sparrow.configuration.default_json_key_transformation_strategy(type)

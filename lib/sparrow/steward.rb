@@ -6,11 +6,24 @@ module Sparrow
   # @deprecated this class is requested to be removed in the feature and its
   # internal will be moved to its counterparts such as HttpMessage itself.
   class Steward
-    attr_reader :allowed_accepts,
-                :allowed_content_types,
-                :excluded_routes,
-                :http_message,
-                :route_parser
+    ##
+    # @return (see Sparrow::Configuration#allowed_accepts)
+    attr_reader :allowed_accepts
+    ##
+    # @return (see Sparrow::Configuration#allowed_content_types)
+    attr_reader :allowed_content_types
+    ##
+    # @return (see Sparrow::Configuration#excluded_routes)
+    attr_reader :excluded_routes
+    ##
+    # @return (see Sparrow::Configuration#ignored_response_codes)
+    attr_reader :ignored_response_codes
+    ##
+    # @return [HttpMessage] the wrapped http message object to be checked
+    attr_reader :http_message
+
+    # see (Sparrow::RouteParser) for the #excluded_routes
+    attr_reader :route_parser
 
     ##
     # Initialize the Steward by the http_message to check and the specific
@@ -19,20 +32,25 @@ module Sparrow
     # @param [HttpMessage] http_message the message to be checked
     # @param [Array<String>] allowed_accepts List of HTTP Accept Header options
     # @param [Array<String>] allowed_content_types List of HTTP Content Type
-    # Header options
+    #   Header options
     # @param [Array<String,Regexp>] excluded_routes List of routes (paths) to
-    # not process
+    #   not process
+    #  (see Sparrow::Configuration#excluded_routes)
+    # @param [Array<Integer>] ignored_response_codes
+    #   (see Sparrow::Configuration#ignored_response_codes)
     # @see RouteParser#excluded_routes
     # @see Configuration
     def initialize(http_message,
-                   allowed_accepts:       [],
+                   allowed_accepts: [],
                    allowed_content_types: [],
-                   excluded_routes:       [])
-      @http_message          = http_message
-      @allowed_accepts       = allowed_accepts
-      @allowed_content_types = allowed_content_types
-      @excluded_routes       = excluded_routes
-      @route_parser          = RouteParser.new(excluded_routes)
+                   excluded_routes: [],
+                   ignored_response_codes: [])
+      @http_message           = http_message
+      @allowed_accepts        = allowed_accepts
+      @allowed_content_types  = allowed_content_types
+      @excluded_routes        = excluded_routes
+      @ignored_response_codes = ignored_response_codes
+      @route_parser           = RouteParser.new(excluded_routes)
     end
 
     ##
@@ -41,9 +59,9 @@ module Sparrow
     #
     # @return [Boolean] processable message
     def has_processable_http_message?
-      allowed_content_type? &&
-          allowed_accept_header? &&
-          includes_route?
+      includes_route? &&
+          allowed_content_type? &&
+          allowed_accept_header?
     end
 
     private

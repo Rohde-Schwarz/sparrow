@@ -7,16 +7,24 @@ module Sparrow
     # @param [Hash] env the Rack environment
     # @return [Array<Object>] the Rack return Array
     def call(env)
-      @last_env = env
+      @last_env                = env
       @status, @headers, @body = app.call(env)
       [status, headers, converted_response_body]
     end
 
     private
 
+    def steward
+      ResponseSteward.new(http_message,
+                          allowed_content_types:  Sparrow.configuration.allowed_content_types,
+                          allowed_accepts:        Sparrow.configuration.allowed_accepts,
+                          excluded_routes:        Sparrow.configuration.excluded_routes,
+                          ignored_response_codes: Sparrow.configuration.ignored_response_codes)
+    end
+
+
     def converted_response_body
-      # return the original body if we are not going to process it
-      return body if unprocessable_status?
+      return body unless steward.has_processable_http_message?
 
       response_body = Sparrow::Strategies::JsonFormatStrategy.convert(body)
 
@@ -34,8 +42,12 @@ module Sparrow
       end
     end
 
-    def unprocessable_status?
-      @status.in?(ignored_response_codes)
+    def http_message
+      response_message         = ResponseHttpMessage.new(last_env)
+      response_message.status  = status
+      response_message.body    = body
+      response_message.headers = headers
+      response_message
     end
   end
 end

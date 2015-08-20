@@ -48,7 +48,7 @@ module Sparrow
         if @params
           @params
         else
-          input_io = @env[rack_input_key]
+          input_io = @env[HttpMessage::RACK_INPUT_KEY]
           params   = input_io.send(:read)
           input_io.rewind
           params
@@ -60,8 +60,8 @@ module Sparrow
       def handle_raw_rack
         if params.present?
           new_raw_input        = json_body.force_encoding("BINARY")
-          @env[rack_input_key] = StringIO.new(new_raw_input)
-          @env[rack_input_key].rewind
+          @env[HttpMessage::RACK_INPUT_KEY] = StringIO.new(new_raw_input)
+          @env[HttpMessage::RACK_INPUT_KEY].rewind
           @env['CONTENT_LENGTH'] = new_raw_input.length
         end
       end

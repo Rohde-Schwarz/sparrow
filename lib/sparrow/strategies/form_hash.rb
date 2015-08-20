@@ -45,13 +45,13 @@ module Sparrow
       # @return  [Hash] the HTTP message params
       # @see #initialize
       def params
-        @params || env[form_hash_key]
+        @params || env[HttpMessage::FORM_HASH_KEY]
       end
 
       private
 
       def handle_form_hash
-        env[form_hash_key] = transform_params if params.present?
+        env[HttpMessage::FORM_HASH_KEY] = transform_params if params.present?
       end
     end
   end

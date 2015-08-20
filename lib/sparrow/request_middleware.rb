@@ -19,5 +19,9 @@ module Sparrow
         super
       end
     end
+
+    def http_message
+      RequestHttpMessage.new(last_env)
+    end
   end
 end

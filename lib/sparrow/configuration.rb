@@ -11,7 +11,8 @@ module Sparrow
                   :allowed_content_types,
                   :allowed_accepts,
                   :enable_logging,
-                  :ignored_response_codes
+                  :ignored_response_codes,
+                  :camelize_strategy
 
     ##
     # Initializes a new Configuration with default parameters
@@ -29,8 +30,9 @@ module Sparrow
         text/x-json
       ]
 
-      @allowed_accepts = @allowed_content_types + [nil]
+      @allowed_accepts        = @allowed_content_types + [nil]
       @ignored_response_codes = [404] + (500..511).to_a
+      @camelize_strategy      = :lower
     end
 
     ##

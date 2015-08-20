@@ -17,7 +17,7 @@ module Sparrow
     # Initializes the HttpMessage
     # @param [Hash] env The Rack environment
     def initialize(env)
-      @env = env
+      @env     = env
     end
 
     ##
@@ -56,7 +56,7 @@ module Sparrow
     # The HTTP Content Type Field
     # @return String
     def content_type
-      request.content_type || http_header(:content_type)
+      http_header(:content_type)
     end
 
     ##
@@ -85,9 +85,9 @@ module Sparrow
           key.dasherize,
           key.parameterize,
           key.underscore.split('_').map(&:humanize).join('-')
-      ].detect { |k| env[k].present? }
+      ].detect { |k| headers_hash[k] }
 
-      env[header_key].to_s.split(';').first
+      headers_hash[header_key].to_s.split(';').first
     end
   end
 end
