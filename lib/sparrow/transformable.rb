@@ -1,14 +1,13 @@
 module Sparrow
+  ##
+  # Encapsulates json transform methods. This is basically the core entry point
+  # for all conversions done by the middleware.
   module Transformable
+    ##
+    # Does the conversion based on the selected strategy and HTTP header
+    # parameters provided
     def transform_params
       transform_params_strategy.transform(ensure_json)
-    end
-
-    def transform_strategy
-      default  =
-          Sparrow.configuration.default_json_key_transformation_strategy(type)
-      strategy = json_format || default
-      strategy.to_sym
     end
 
     def handle
@@ -24,6 +23,7 @@ module Sparrow
     end
 
     private
+
     def json_format
       if respond_to?(:env) then
         env[Sparrow.configuration.json_format_header(type)]
@@ -32,6 +32,8 @@ module Sparrow
       end
     end
 
+    # Make sure we are always dealing with a Ruby representation of a JSON
+    # String, i.e. a Hash
     def ensure_json
       json_params = if !params.is_a?(Hash)
                       Sparrow::Strategies::JsonFormatStrategy.convert(params)
@@ -58,6 +60,8 @@ module Sparrow
       transform_params.new(transform_strategy)
     end
 
+    ##
+    # Usualy Query String parameters want to get transformed as well
     def transform_query_string
       env_query_hash      = Rack::Utils.parse_nested_query(env['QUERY_STRING'])
       transformed_hash    = transform_params_strategy.transform(env_query_hash)
@@ -71,6 +75,12 @@ module Sparrow
 
     def form_hash_key
       Sparrow::HttpMessage::FORM_HASH_KEY
+    end
+    def transform_strategy
+      default  =
+          Sparrow.configuration.default_json_key_transformation_strategy(type)
+      strategy = json_format || default
+      strategy.to_sym
     end
   end
 end

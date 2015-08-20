@@ -1,4 +1,6 @@
 module Sparrow
+  # Middleware configuration store
+  # see {https://github.com/GateprotectGmbH/sparrow#configuration}
   class Configuration
     attr_accessor :json_request_format_header,
                   :json_response_format_header,

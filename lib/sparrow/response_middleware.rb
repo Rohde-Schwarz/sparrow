@@ -1,10 +1,18 @@
 module Sparrow
+  ##
+  # Handles the Response conversion
   class ResponseMiddleware < Middleware
+    ##
+    # This call ends the rack chain
+    # @param [Hash] env the Rack environment
+    # @return [Array<Object>] the Rack return Array
     def call(env)
       @last_env = env
       @status, @headers, @body = app.call(env)
       [status, headers, converted_response_body]
     end
+
+    private
 
     def converted_response_body
       # return the original body if we are not going to process it
