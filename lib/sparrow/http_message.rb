@@ -14,10 +14,11 @@ module Sparrow
     # @see #initialize
     attr_reader :env
 
+    ##
     # Initializes the HttpMessage
     # @param [Hash] env The Rack environment
     def initialize(env)
-      @env     = env
+      @env = env
     end
 
     ##
@@ -42,19 +43,19 @@ module Sparrow
     # Requested path within this HTTP message
     # @return [String] the path
     def path
-      request.path || http_header(:path_info)
+      http_header(:path_info)
     end
 
     ##
     # The HTTP Accept Header field
-    # @return String
+    # @return String the HTTP Accept Header value
     def accept
       http_header(:accept)
     end
 
     ##
     # The HTTP Content Type Field
-    # @return String
+    # @return String the HTTP Content-Type Header value
     def content_type
       http_header(:content_type)
     end
@@ -67,6 +68,7 @@ module Sparrow
     end
 
     private
+
     def request_class
       if defined?(Rails)
         ::ActionDispatch::Request
@@ -75,6 +77,9 @@ module Sparrow
       end
     end
 
+    ##
+    # Make sure to use any appropriate format of common HTTP Header key syntax
+    # for the given key
     def http_header(key)
       key        = key.to_s
       header_key = [

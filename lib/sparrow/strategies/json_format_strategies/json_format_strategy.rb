@@ -4,16 +4,19 @@ module Sparrow
     # Superclass for all JSON format strategies.
     # Contains no own instance logic, but keeps track of the registration
     # of all JSON format strategies with its Singleton class methods.
+    # @abstract Not exactly a abstract class but contains no own logic but
+    #   singleton class methods
     class JsonFormatStrategy
       ##
-      # Empty constructor
+      # Empty constructor. Does nothing.
       def initialize(*args)
       end
 
       ##
       # Register a new JSON Format strategy
-      # @param *args the arguments for the new strategy
-      # @return [Array] the updated registered JSON Format strategies available
+      # @param [Object] args the arguments for the new strategy
+      # @return [Array] args the updated registered JSON Format strategies
+      #   available
       def self.register_json_format(*args)
         init(args)
         @@json_format_strategies << self.new(args)
@@ -21,7 +24,7 @@ module Sparrow
 
       ##
       # Start a JSON conversion by its given string
-      # @param [Object] a JSON object representation.
+      # @param [Object] body a JSON object representation.
       #  can be any type a JSON format strategy is registered,
       #  i.e. an Array, a String or a RackBody
       # @return [String] the formatted JSON

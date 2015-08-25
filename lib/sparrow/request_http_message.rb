@@ -1,14 +1,22 @@
 module Sparrow
   class RequestHttpMessage < HttpMessage
+    ##
+    # @return [Hash] The HTTP Headers
     def headers_hash
       env
     end
 
     ##
+    # @return [String] the request's path
+    def path
+      request.path || super
+    end
+
+    ##
     # The HTTP Content Type Field
-    # @return String
+    # @return [String] the HTTP Content Type
     def content_type
-      request.content_type || http_header(:content_type)
+      request.content_type || super
     end
   end
 end

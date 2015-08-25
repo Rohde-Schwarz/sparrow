@@ -17,7 +17,7 @@ require 'sparrow/railtie' if defined?(Rails)
 
 module Sparrow
   class << self
-    # Yields the configuration
+    # @yield [Configuration] configuration
     def configure
       yield configuration
     end

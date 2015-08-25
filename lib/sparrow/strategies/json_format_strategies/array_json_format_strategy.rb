@@ -13,7 +13,7 @@ module Sparrow
 
       ##
       # Takes the first element from the Array and returns it
-      # @param [Array] the input Array
+      # @param [Array] input the input Array
       # @return [String] the first element of the input as a String
       def convert(input)
         input.first.to_s

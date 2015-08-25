@@ -5,7 +5,7 @@ module Sparrow
     ##
     # This call ends the rack chain
     # @param [Hash] env the Rack environment
-    # @return [Array<Object>] the Rack return Array
+    # @return [Array<String, Hash, Array<String>>] the Rack return Array
     def call(env)
       @last_env                = env
       @status, @headers, @body = app.call(env)

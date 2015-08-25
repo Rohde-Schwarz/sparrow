@@ -16,7 +16,7 @@ module Sparrow
       end
 
       ##
-      # @param [Object] input the JSON object
+      # @param [#to_s] input the JSON object
       # @return [String] the input as a String
       def convert(input)
         input.to_s

@@ -8,7 +8,7 @@ module Sparrow
         # @return [Symbol] the camelizing strategy
         # @see #initialize
         attr_accessor :strategy
-
+        
         # @return [Boolean] Defines wether complete uppercased keys will be
         #   transformed
         # @see #initialize
@@ -16,16 +16,17 @@ module Sparrow
 
         ##
         # Initialize a new CamelizeKey strategy
-        # @param [Hash] options
-        #  +strategy+ defines the camelizing strategy type.
-        #  Defines how to camelize, which comes down to starting with a
-        #  lowercased character or with an
-        #  uppercased character. Thus possible values are :lower and :upper
+        # @param [Hash] options camelize options
+        # @option options [Symbol] :strategy ('lower') defines the camelizing
+        #   strategy type. Defines how to camelize, which comes down to starting
+        #   with a lowercased character or with an uppercased character.
+        #   Thus possible values are :lower and :upper.
         #
-        #  +camelize_ignore_uppercase_keys+ Defines if already completely
-        #  uppercased keys should not be transformed. I.e. JSON stays JSON if
-        #  this is set to true. If it is set to false JSON will be transformed
-        #  to Json.
+        # @option options [Boolean] :camelize_ignore_uppercase_keys (true)
+        #   Defines if already completely uppercased keys should not be
+        #   transformed. I.e. JSON stays JSON if
+        #   this is set to true. If it is set to false JSON will be transformed
+        #   to Json.
         def initialize(options = {})
           self.strategy                       = options.fetch(:strategy, :lower)
           self.camelize_ignore_uppercase_keys =
