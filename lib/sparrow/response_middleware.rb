@@ -10,6 +10,7 @@ module Sparrow
     def converted_response_body
       # return the original body if we are not going to process it
       return body if unprocessable_status?
+      return body unless strategy.has_processable_request?
 
       response_body = Sparrow::Strategies::JsonFormatStrategy.convert(body)
 
