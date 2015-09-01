@@ -10,7 +10,7 @@ module Sparrow
           'ACCEPT'       => 'application/json'
       }
     end
-    let(:http_message) { HttpMessage.new(env) }
+    let(:http_message) { RequestHttpMessage.new(env) }
     let(:excluded_routes) { ['/api/model/certificates'] }
     let(:allowed_accepts) { ['application/json'] }
     let(:allowed_content_types) { ['application/json'] }

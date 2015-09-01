@@ -48,7 +48,7 @@ module Sparrow
 
     private
     def normalize_path(path)
-      path[/./m] = '' if path.starts_with?('/')
+      path[/./m] = '' if path.to_s.starts_with?('/')
       path
     end
   end

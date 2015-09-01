@@ -3,6 +3,8 @@ module Sparrow
   # Wrapper class for either a ::ActiveDispatch::Request or ::Rack::Request
   # instance for the given rack environment.
   # The wrapped class is determined based on the presence of the Rails constant.
+  # @abstract RequestHttpMessage and ResponseHttpMessage should be used in
+  #   practice
   class HttpMessage
     # The rack environment hash key that determines if it is a form hash request
     FORM_HASH_KEY  = 'rack.request.form_hash'
@@ -90,8 +92,11 @@ module Sparrow
           key.dasherize,
           key.parameterize,
           key.underscore.split('_').map(&:humanize).join('-')
-      ].detect { |k| headers_hash[k] }
+      ].detect do |transformed_key|
+        headers_hash[transformed_key]
+      end
 
+      return nil unless header_key
       headers_hash[header_key].to_s.split(';').first
     end
   end

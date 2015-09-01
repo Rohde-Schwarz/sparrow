@@ -7,7 +7,7 @@ module Sparrow
     private
 
     def processable_status?
-      !http_message.in?(ignored_response_codes)
+      !http_message.status.in?(ignored_response_codes)
     end
   end
 end

@@ -29,7 +29,7 @@ module Sparrow
 
       response_body = Sparrow::Strategies::JsonFormatStrategy.convert(body)
 
-      return [] unless response_body.present?
+      return [] if response_body.blank?
 
       @headers.delete 'Content-Length'
       response_strategy = strategy.new(last_env, :response, response_body)

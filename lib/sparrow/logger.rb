@@ -42,7 +42,7 @@ module Sparrow
       @logger = if defined?(Rails) then
                   Rails.logger
                 else
-                  ActiveSupport::Logger.new(STDOUT)
+                  ::Logger.new(STDOUT)
                 end
     end
 

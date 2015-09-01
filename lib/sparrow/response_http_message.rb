@@ -16,7 +16,16 @@ module Sparrow
     # The wrapped Response instance
     # @return [Object] the response
     def response
-      @response ||= response_class.new(status, body, headers)
+      clazz = response_class
+      @response ||= if clazz.name == 'ActionDispatch::Response'
+                      clazz.new(status, headers_hash, body)
+                    else
+                      clazz.new(body, status, headers_hash)
+                    end
+    end
+
+    def path
+      super
     end
 
     def content_type
@@ -34,7 +43,7 @@ module Sparrow
     end
 
     def headers_hash
-      headers
+      @headers_hash ||= env.merge(headers)
     end
   end
 end
