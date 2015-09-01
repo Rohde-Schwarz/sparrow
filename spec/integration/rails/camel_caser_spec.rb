@@ -303,5 +303,18 @@ describe "camel caser middleware for Rails", type: :rails do
         expect(last_json['keys']).to include('de')
       end
     end
+
+    describe 'the configuration of key transformation strategies' do
+      it 'prioritizes the header setting higher than the default config' do
+        Sparrow.configure do |config|
+          config.default_json_response_key_transformation_strategy = :camelize
+        end
+
+        get '/welcome', nil,  {'response-json-format' => 'underscore'}
+        response_json = MultiJson.load(last_response.body)
+        expect(response_json).to_not have_key('fakeKey')
+        expect(response_json).to have_key('fake_key')
+      end
+    end
   end
 end
