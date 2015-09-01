@@ -1,5 +1,5 @@
 module Sparrow
-  describe Request, type: :unit do
+  describe HttpMessage, type: :unit do
     let(:env) do
       {
         'Content-Type' => 'application/json; charset=utf-8',
@@ -11,7 +11,7 @@ module Sparrow
         }
       }
     end
-    subject(:request) { Request.new(env) }
+    subject(:request) { described_class.new(env) }
 
     its(:path) { is_expected.to eq '/api/status.json' }
     its(:accept) { is_expected.to eq 'application/json' }

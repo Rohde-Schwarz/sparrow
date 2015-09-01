@@ -7,17 +7,21 @@ module Sparrow
     end
 
     def content_type
-      request.content_type.presence
+      http_message.content_type.presence
     end
 
     def strategy
-      if steward.has_processable_request? &&
-          request.form_hash?
+      if steward.has_processable_http_message? &&
+          http_message.form_hash?
         Sparrow.logger.debug 'Choosing strategy FormHash'
         Strategies::FormHash
       else
         super
       end
+    end
+
+    def http_message
+      RequestHttpMessage.new(last_env)
     end
   end
 end

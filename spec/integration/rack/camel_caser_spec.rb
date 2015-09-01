@@ -31,7 +31,7 @@ describe "camel caser middleware", type: :rack do
       post '/', json
     end
 
-    subject do 
+    subject do
       MultiJson.load(last_response.body)
     end
 
@@ -43,7 +43,7 @@ describe "camel caser middleware", type: :rack do
 
     it 'converted the snake case fake key to camelCase' do
       expect(subject['fake_key']).to_not be_present
-      expect(subject['fakeKey']).to eq true
+      expect(subject['fakeKey']).to eq false
     end
   end
 end

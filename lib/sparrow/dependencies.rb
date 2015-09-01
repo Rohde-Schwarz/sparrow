@@ -8,4 +8,8 @@ if ActiveSupport::VERSION::STRING.match(/3\.\d+\.\d+/)
   require 'active_support/core_ext/object/to_query'
 end
 
+unless defined?(Rails)
+  require 'active_support/core_ext/logger'
+end
+
 require 'singleton'
