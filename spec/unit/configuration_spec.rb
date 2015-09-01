@@ -12,6 +12,8 @@ module Sparrow
       is_expected.to eq :camelize
     end
 
+    its(:camelize_strategy) { is_expected.to eq :lower }
+
     its(:default_json_response_key_transformation_strategy) do
       is_expected.to eq :camelize
     end
