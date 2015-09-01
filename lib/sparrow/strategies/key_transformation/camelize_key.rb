@@ -5,11 +5,13 @@ module Sparrow
       # Strategy class for converting JSON to a camelized format.
       # Meaning snake_case => snakeCase
       class CamelizeKey
+        ##
         # @return [Symbol] the camelizing strategy
         # @see #initialize
         attr_accessor :strategy
-        
-        # @return [Boolean] Defines wether complete uppercased keys will be
+
+        ##
+        # @return [Boolean] Defines whether complete uppercased keys will be
         #   transformed
         # @see #initialize
         attr_accessor :camelize_ignore_uppercase_keys

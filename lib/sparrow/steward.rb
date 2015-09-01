@@ -3,8 +3,8 @@ module Sparrow
   # Parses the http_mesage and provides information if it should be
   # processed, i.e. if the content type or accept header is applicable
   #
-  # @todo this class is requested to be removed in the feature and its
-  #   internal will be moved to its counterparts such as HttpMessage itself.
+  # @todo this class is requested to be removed by issue #7 in the feature and
+  # its internal will be moved to its counterparts such as HttpMessage itself.
   # @version 0.0.16
   class Steward
     ##
