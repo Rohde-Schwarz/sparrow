@@ -7,6 +7,8 @@ module Sparrow
     class Ignore
       include Transformable
 
+      attr_reader :env
+
       ##
       # Create a new IgnoreStrategy
       # @param [Hash] env the Rack environment

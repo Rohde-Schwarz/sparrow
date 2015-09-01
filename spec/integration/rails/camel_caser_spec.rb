@@ -12,6 +12,10 @@ describe "camel caser middleware for Rails", type: :rails do
   end
   let(:json) { MultiJson.dump(json_object) }
 
+  after(:each) do
+    Sparrow.reset_configuration
+  end
+
   context "accept header is given" do
 
     context 'path not excluded' do
@@ -305,15 +309,30 @@ describe "camel caser middleware for Rails", type: :rails do
     end
 
     describe 'the configuration of key transformation strategies' do
-      it 'prioritizes the header setting higher than the default config' do
+      it 'prioritizes the camelize header setting higher than the default underscore' do
+        Sparrow.configure do |config|
+          config.default_json_response_key_transformation_strategy = :underscore
+        end
+
+        get '/welcome', nil,  {'response-json-format' => 'camelize'}
+
+        response_json = MultiJson.load(last_response.body)
+
+        expect(response_json).to_not have_key('fake_key')
+        expect(response_json).to have_key('fakeKey')
+      end
+
+      it 'prioritizes the underscore header setting higher than the default camelize' do
         Sparrow.configure do |config|
           config.default_json_response_key_transformation_strategy = :camelize
         end
 
         get '/welcome', nil,  {'response-json-format' => 'underscore'}
+
         response_json = MultiJson.load(last_response.body)
-        expect(response_json).to_not have_key('fakeKey')
+
         expect(response_json).to have_key('fake_key')
+        expect(response_json).to_not have_key('fakeKey')
       end
     end
   end

@@ -25,11 +25,8 @@ module Sparrow
     private
 
     def json_format
-      if respond_to?(:env)
-        env[Sparrow.configuration.json_format_header(type)]
-      else
-        nil
-      end
+      env_key = Sparrow.configuration.json_format_header(type)
+      env[env_key]
     end
 
     # Make sure we are always dealing with a Ruby representation of a JSON
@@ -67,7 +64,7 @@ module Sparrow
     end
 
     ##
-    # Usualy Query String parameters want to get transformed as well
+    # Usually Query String parameters want to get transformed as well
     def transform_query_string
       env_query_hash      = Rack::Utils.parse_nested_query(env['QUERY_STRING'])
       transformed_hash    = transform_params_strategy.transform(env_query_hash)
