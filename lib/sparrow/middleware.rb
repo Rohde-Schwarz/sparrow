@@ -57,8 +57,8 @@ module Sparrow
                  else
                    Strategies::Ignore
                  end
-
-      Sparrow.logger.debug("Choosing strategy #{strategy.name}")
+      
+      Sparrow.logger.debug("#{self.class.name} choosing strategy #{strategy.name}")
       strategy
     end
 

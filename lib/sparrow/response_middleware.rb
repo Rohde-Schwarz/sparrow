@@ -24,22 +24,17 @@ module Sparrow
 
 
     def converted_response_body
+      # return the original body if we are not going to process it
       return body unless steward.has_processable_http_message?
 
       response_body = Sparrow::Strategies::JsonFormatStrategy.convert(body)
 
-      if response_body.present?
-        response_strategy = strategy.new(last_env, :response, response_body)
-        response_strategy.handle
+      return [] unless response_body.present?
 
-        if response_body.is_a?(Array)
-          response_body
-        else
-          Array(response_strategy.json_body)
-        end
-      else
-        []
-      end
+      @headers.delete 'Content-Length'
+      response_strategy = strategy.new(last_env, :response, response_body)
+      response_strategy.handle
+      Array(response_strategy.json_body)
     end
 
     def http_message
