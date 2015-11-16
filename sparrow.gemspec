@@ -24,12 +24,12 @@ supported.
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "activesupport", ">= 3.2.17"
+  spec.add_runtime_dependency "multi_json"
   spec.add_development_dependency "pry"
   spec.add_development_dependency "bundler", "~> 1.5"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec", '~> 3'
   spec.add_development_dependency "rspec-its"
   spec.add_development_dependency "rack-test"
-  spec.add_development_dependency "multi_json"
   spec.add_development_dependency "rails", rails_version
 end
