@@ -1,5 +1,5 @@
-require File.join(File.dirname(__FILE__), "app")
-require File.join(File.dirname(__FILE__), '..',
+require File.join(__dir__, "app")
+require File.join(__dir__, '..',
                   '..',
                   '..',
                   '..',
