@@ -15,13 +15,13 @@ module Sparrow
     private
 
     def steward
+      configuration = Sparrow.configuration
       ResponseSteward.new(http_message,
-                          allowed_content_types:  Sparrow.configuration.allowed_content_types,
-                          allowed_accepts:        Sparrow.configuration.allowed_accepts,
-                          excluded_routes:        Sparrow.configuration.excluded_routes,
-                          ignored_response_codes: Sparrow.configuration.ignored_response_codes)
+                          allowed_content_types:  configuration.allowed_content_types,
+                          allowed_accepts:        configuration.allowed_accepts,
+                          excluded_routes:        configuration.excluded_routes,
+                          ignored_response_codes: configuration.ignored_response_codes)
     end
-
 
     def converted_response_body
       # return the original body if we are not going to process it
