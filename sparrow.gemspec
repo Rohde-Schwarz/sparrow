@@ -1,6 +1,7 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 rails_version = ENV["RAILS_VERSION"] || "3.2.21"
+ruby_version = File.open(File.join(__dir__, '.ruby-version')).read.chomp
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'sparrow/version'
 
@@ -17,6 +18,7 @@ supported.
   }
   spec.homepage    = "https://github.com/GateprotectGmbH/sparrow"
   spec.license     = "MIT"
+  spec.required_ruby_version = ">= #{ruby_version}"
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
