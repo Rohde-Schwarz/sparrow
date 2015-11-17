@@ -230,7 +230,7 @@ describe "camel caser middleware for Rails", type: :rails do
 
     end
 
-    context 'reaction on error responses' do
+    describe 'the reaction on error responses' do
       require 'action_controller/metal/exceptions'
       it 'lets Rails do its RoutingError when the url is not found' do
         expect do
@@ -239,9 +239,18 @@ describe "camel caser middleware for Rails", type: :rails do
       end
 
       it 'does not touch the response if a server error gets triggered' do
-        expect {
+        expect do
           get '/error', {}, { 'CONTENT-TYPE' => 'application/json' }
-        }.to raise_error ZeroDivisionError
+        end.to raise_error ZeroDivisionError
+      end
+
+      it 'does not fail on 507 error' do
+        expect do
+          get '/error-507', {}, 'CONTENT-TYPE' => 'appliation/json',
+           'Accept' => 'application/json'
+        end.to_not raise_error
+        expect(last_response.status).to eq 507
+        expect(MultiJson.load(last_response.body)).to eq({'error_code' => 507})
       end
     end
 

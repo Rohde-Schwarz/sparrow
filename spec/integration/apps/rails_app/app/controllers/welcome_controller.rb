@@ -39,11 +39,6 @@ class WelcomeController < ApplicationController
     render json: params
   end
 
-  def error
-    # lets cause a server error by doing something stupid here
-    0 / 0
-  end
-
   private
   def extract_keys
     not_acceptable_keys = %w(controller format default action welcome)
