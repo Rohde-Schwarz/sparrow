@@ -21,7 +21,7 @@ module Sparrow
       @json_request_format_header                        = 'request-json-format'
       @json_response_format_header                       = 'response-json-format'
       @excluded_routes                                   = []
-      @default_json_request_key_transformation_strategy  = :camelize
+      @default_json_request_key_transformation_strategy  = :underscore
       @default_json_response_key_transformation_strategy = :camelize
       @camelize_ignore_uppercase_keys                    = true
       @allowed_content_types                             = %w[
