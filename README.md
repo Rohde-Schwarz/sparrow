@@ -1,5 +1,7 @@
 # Sparrow
 
+[![Little Sparrow by Apofiss](http://orig07.deviantart.net/d937/f/2015/064/c/1/little_sparrow_by_apofiss-d5wpswt.jpg)](http://www.deviantart.com/art/Little-Sparrow-357282461)
+
 A Rack middleware for converting the params keys and JSON response keys of a Rack application.
 
 [![Build Status](https://travis-ci.org/GateprotectGmbH/sparrow.svg?branch=master)](https://travis-ci.org/GateprotectGmbH/sparrow) [![Gem Version](https://badge.fury.io/rb/cp-sparrow.svg)](http://badge.fury.io/rb/cp-sparrow)
