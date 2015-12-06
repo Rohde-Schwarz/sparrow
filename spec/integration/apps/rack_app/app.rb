@@ -21,7 +21,7 @@ class App
   def status
     path = @env['PATH_INFO']
     if path =~ /error$/
-      @params['errorCode'] || 500
+      @params['error_code'] || 500
     else
       200
     end

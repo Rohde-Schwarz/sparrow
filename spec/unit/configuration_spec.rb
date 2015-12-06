@@ -9,7 +9,7 @@ module Sparrow
     its(:enable_logging) { is_expected.to be false }
     its(:excluded_routes) { is_expected.to eq [] }
     its(:default_json_request_key_transformation_strategy) do
-      is_expected.to eq :camelize
+      is_expected.to eq :underscore
     end
 
     its(:camelize_strategy) { is_expected.to eq :lower }
@@ -43,7 +43,7 @@ module Sparrow
 
       specify do
         actual = subject.default_json_key_transformation_strategy(:request)
-        expect(actual).to eq :camelize
+        expect(actual).to eq :underscore
       end
     end
   end
