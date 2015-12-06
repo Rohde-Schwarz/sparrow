@@ -184,14 +184,15 @@ describe "camel caser middleware for Rails", type: :rails do
       end
 
 
-      it "did not convert lower camelcase to underscore params" do
+      it "converts incoming request parameters to snake_case" do
         expect(subject).to have_key("keys")
-        expect(subject["keys"]).to include("userName")
+        expect(subject["keys"]).to include("user_name")
       end
 
-      it "did not convert all UPPERCASE words to underscore params" do
+      # not touching UPPERCASE params only works for camelizing strategies
+      it "converts UPPERCASE params when using underscore strategy" do
         expect(subject).to have_key("keys")
-        expect(subject["keys"]).to include("DE")
+        expect(subject["keys"]).to include("de")
       end
 
     end

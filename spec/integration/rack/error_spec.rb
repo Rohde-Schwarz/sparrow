@@ -1,9 +1,8 @@
 require 'spec_helper'
 
-describe 'sparrow middleware reactions when encountering error status',
-  type: :rack do
-  describe 'the reaction on a server error' do
-    let(:json) { {error_code: 507 } }
+describe 'the reactions when encountering error status', type: :rack do
+  context 'when encountering a server error' do
+    let(:json) { { error_code: 507 } }
 
     before do
       json_string = MultiJson.dump(json)
