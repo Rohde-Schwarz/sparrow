@@ -188,14 +188,15 @@ describe "camel caser middleware for Rails", type: :rails do
       end
 
 
-      it "did not convert lower camelcase to underscore params" do
+      it "converts incoming request parameters to snake_case" do
         expect(subject).to have_key("keys")
-        expect(subject["keys"]).to include("userName")
+        expect(subject["keys"]).to include("user_name")
       end
 
-      it "did not convert all UPPERCASE words to underscore params" do
+      # not touching UPPERCASE params only works for camelizing strategies
+      it "converts UPPERCASE params when using underscore strategy" do
         expect(subject).to have_key("keys")
-        expect(subject["keys"]).to include("DE")
+        expect(subject["keys"]).to include("de")
       end
 
     end
@@ -234,7 +235,7 @@ describe "camel caser middleware for Rails", type: :rails do
 
     end
 
-    context 'reaction on error responses' do
+    describe 'the reaction on error responses' do
       require 'action_controller/metal/exceptions'
       it 'lets Rails do its RoutingError when the url is not found' do
         expect do
@@ -243,9 +244,18 @@ describe "camel caser middleware for Rails", type: :rails do
       end
 
       it 'does not touch the response if a server error gets triggered' do
-        expect {
+        expect do
           get '/error', {}, { 'CONTENT-TYPE' => 'application/json' }
-        }.to raise_error ZeroDivisionError
+        end.to raise_error ZeroDivisionError
+      end
+
+      it 'does not fail on 507 error' do
+        expect do
+          get '/error-507', {}, 'CONTENT-TYPE' => 'appliation/json',
+           'Accept' => 'application/json'
+        end.to_not raise_error
+        expect(last_response.status).to eq 507
+        expect(MultiJson.load(last_response.body)).to eq({'error_code' => 507})
       end
     end
 

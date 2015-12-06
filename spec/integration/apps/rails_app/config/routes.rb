@@ -58,7 +58,8 @@ Dummy::Application.routes.draw do
   get '/ignore' => 'welcome#ignore', default: {format: 'json'}
   get '/ignore/non_json_text_response' => 'welcome#non_json_text_response', default: {format: 'json'}
   get '/ignore/non_json_binary_response' => 'welcome#non_json_binary_response', default: {format: 'json'}
-  get '/error' => 'welcome#error', default: {format: 'json'}
+  get '/error' => 'errors#error', default: {format: 'json'}
+  get '/error-507' => 'errors#error_507'
 
   # See how all your routes lay out with "rake routes"
 
