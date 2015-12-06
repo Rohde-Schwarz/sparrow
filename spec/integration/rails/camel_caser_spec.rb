@@ -39,6 +39,7 @@ describe "camel caser middleware for Rails", type: :rails do
     context 'exclude paths' do
       context 'ignored json in and out' do
         before do
+          Sparrow.configure {|config| config.excluded_routes << ['/ignore']}
           get '/ignore', json_object, { 'CONTENT-TYPE'         => 'application/json',
                                         'request-json-format'  => 'underscore',
                                         'response-json-format' => 'underscore' }
@@ -59,6 +60,9 @@ describe "camel caser middleware for Rails", type: :rails do
 
       context 'ignored json in and ignored text out' do
         before do
+          Sparrow.configure do |config|
+            config.excluded_routes << ['/ignore/non_json_text_response']
+          end
           get '/ignore/non_json_text_response', json_object,
             { 'CONTENT-TYPE'         => 'application/json',
               'request-json-format'  => 'underscore',
