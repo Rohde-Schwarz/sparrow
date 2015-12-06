@@ -3,6 +3,10 @@ module Sparrow
     ##
     # Core class to trigger the conversion
     class TransformParams
+      if Sparrow.uses_active_support_legacy_version?
+        using Sparrow::CoreExt::Hash
+      end
+
       ##
       # the strategy stating how to convert the JSON
       # @return [KeyTransformation] key transformation strategy
