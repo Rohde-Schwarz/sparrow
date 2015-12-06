@@ -35,6 +35,10 @@ module Sparrow
       @camelize_strategy      = :lower
     end
 
+    def active_support_legacy_version
+      /3\.\d+\.\d+/
+    end
+
     ##
     # @param type [String] the http message type.
     #   Must be either 'request' or 'response'.
