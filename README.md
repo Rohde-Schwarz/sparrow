@@ -5,6 +5,7 @@
 A Rack middleware for converting the params keys and JSON response keys of a Rack application.
 
 [![Build Status](https://travis-ci.org/GateprotectGmbH/sparrow.svg?branch=master)](https://travis-ci.org/GateprotectGmbH/sparrow) [![Gem Version](https://badge.fury.io/rb/cp-sparrow.svg)](http://badge.fury.io/rb/cp-sparrow)
+[![Code Climate](https://codeclimate.com/github/GateprotectGmbH/sparrow/badges/gpa.svg)](https://codeclimate.com/github/GateprotectGmbH/sparrow)
 
 ## Installation
 
@@ -135,7 +136,7 @@ Example:
 
 > `Symbol`. Default: `:lower`
 
-Defines which strategy to use when camelizing keys. Possible options are `:lower` and `:upper`, which tells the middleware to 
+Defines which strategy to use when camelizing keys. Possible options are `:lower` and `:upper`, which tells the middleware to
 start camelized keys with an uppercased character or with a lowercased character.
 
 Example:
