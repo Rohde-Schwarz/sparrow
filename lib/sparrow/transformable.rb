@@ -38,8 +38,8 @@ module Sparrow
       json_params = if !params.is_a?(Hash)
                       Sparrow::Strategies::JsonFormatStrategy.convert(params)
                     elsif params.is_a?(Hash) &&
-                        params.values == [nil] &&
-                        params.keys.length == 1
+                        params.values.compact.empty? &&
+                        params.keys.one?
                       params.keys.first
                     else
                       params

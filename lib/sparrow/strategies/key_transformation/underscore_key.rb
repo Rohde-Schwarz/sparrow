@@ -7,7 +7,7 @@ module Sparrow
         ##
         # Create a new UnderscoreKey Strategy
         # Does nothing except returning a plain instance.
-        def initialize(*args)
+        def initialize(*_args)
           # no initialization needed
         end
 

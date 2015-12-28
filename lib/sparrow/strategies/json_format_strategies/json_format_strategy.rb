@@ -9,7 +9,7 @@ module Sparrow
     class JsonFormatStrategy
       ##
       # Empty constructor. Does nothing.
-      def initialize(*args)
+      def initialize(*_args)
       end
 
       ##
@@ -29,22 +29,23 @@ module Sparrow
       #  i.e. an Array, a String or a RackBody
       # @return [String] the formatted JSON
       def self.convert(body)
-        strategy = json_format_strategies.detect do |strategy|
-          strategy.match?(body)
+        strategy = json_format_strategies.detect do |strategy_candidate|
+          strategy_candidate.match?(body)
         end
         strategy.convert(body)
       end
 
-      private
       def self.init(*args)
         @@json_format_strategies ||= Array.new(args)
       end
+      private_class_method :init
 
       def self.json_format_strategies
         init
         default = Sparrow::Strategies::DefaultJsonFormatStrategy.instance
         @@json_format_strategies.reject(&:blank?) + [default]
       end
+      private_class_method :json_format_strategies
     end
   end
 end

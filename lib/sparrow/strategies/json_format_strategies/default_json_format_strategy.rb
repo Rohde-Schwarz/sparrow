@@ -11,7 +11,7 @@ module Sparrow
       # fallback.
       # @param [Object] input the JSON input
       # @return [Boolean] True
-      def match?(input)
+      def match?(_input)
         true
       end
 

@@ -55,7 +55,7 @@ module Sparrow
       private
 
       def create_key_transformation_strategy(key_transformation_strategy)
-        class_name = "#{key_transformation_strategy.to_s}_key"
+        class_name = "#{key_transformation_strategy}_key"
         class_name = class_name.camelize
         full_strategy_class_name =
             "Sparrow::Strategies::KeyTransformation::#{class_name}"
