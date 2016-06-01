@@ -18,7 +18,7 @@ if Sparrow.uses_active_support_legacy_version?
 end
 
 unless defined?(Rails)
-  require 'active_support/core_ext/logger'
+  require 'active_support/logger'
 end
 
 require 'singleton'

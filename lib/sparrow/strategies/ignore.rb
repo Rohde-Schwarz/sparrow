@@ -46,8 +46,8 @@ module Sparrow
         input = @env[HttpMessage::RACK_INPUT_KEY].gets
 
         begin
-          @env[HttpMessage::FORM_HASH_KEY] = MultiJson.load(input)
-        rescue MultiJson::ParseError
+          @env[HttpMessage::FORM_HASH_KEY] = JSON.parse(input)
+        rescue JSON::ParserError
           # ignore
         ensure
           @env[HttpMessage::RACK_INPUT_KEY].rewind

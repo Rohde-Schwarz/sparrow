@@ -5,7 +5,7 @@ describe 'the reactions when encountering error status', type: :rack do
     let(:json) { { error_code: 507 } }
 
     before do
-      json_string = MultiJson.dump(json)
+      json_string = JSON.generate(json)
       post '/error', json_string, {}
     end
 

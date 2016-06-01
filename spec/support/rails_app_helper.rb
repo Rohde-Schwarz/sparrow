@@ -1,6 +1,6 @@
 ENV["RAILS_ENV"] ||= "test"
 
-#require File.expand_path("../../apps/rails_app/config/environment.rb",  __FILE__)
+require File.expand_path("../../integration/apps/rails_app/config/environment.rb",  __FILE__)
 module RailsAppHelper
   include Rack::Test::Methods
 

@@ -16,10 +16,10 @@ module Sparrow
 
     def json_body
       json = parsable_json_string(transform_params)
-      MultiJson.load(json)
+      JSON.parse(json)
       json
-    rescue MultiJson::ParseError
-      MultiJson.dump(ensure_json)
+    rescue JSON::ParserError
+      JSON.generate(ensure_json)
     end
 
     private
@@ -44,13 +44,13 @@ module Sparrow
                     else
                       params
                     end
-      return MultiJson.load(json_params) if json_params.is_a?(String)
+      return JSON.parse(json_params) if json_params.is_a?(String)
       json_params
     end
 
     def parsable_json_string(transformable_params)
       if [Hash, Array].include? transformable_params.class
-        MultiJson.dump(transformable_params)
+        JSON.generate(transformable_params)
       else
         transformable_params
       end
@@ -67,7 +67,7 @@ module Sparrow
     end
 
     ##
-    # Usualy Query String parameters want to get transformed as well
+    # Usually Query String parameters want to get transformed as well
     def transform_query_string
       env_query_hash      = Rack::Utils.parse_nested_query(env['QUERY_STRING'])
       transformed_hash    = transform_params_strategy.transform(env_query_hash)
