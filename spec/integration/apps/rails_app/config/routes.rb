@@ -45,16 +45,16 @@ Rails.application.routes.draw do
   
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'welcome#index', defaults: { format: 'json' }
-  post '/posts' => 'welcome#posts', defaults: {format: 'json'}
-  get '/welcome' => 'welcome#show', default: {format: 'json'}
-  get '/welcome/non_json_text_response' => 'welcome#non_json_text_response', default: {format: 'json'}
-  get '/welcome/non_json_binary_response' => 'welcome#non_json_binary_response', default: {format: 'json'}
-  get '/array_of_elements' => 'welcome#array_of_elements', default: {format: 'json'}
-  get '/upcase_first_name' => 'welcome#upcase_first_name', default: {format: 'json'}
-  get '/ignore' => 'welcome#ignore', default: {format: 'json'}
-  get '/ignore/non_json_text_response' => 'welcome#non_json_text_response', default: {format: 'json'}
-  get '/ignore/non_json_binary_response' => 'welcome#non_json_binary_response', default: {format: 'json'}
-  get '/error' => 'errors#error', default: {format: 'json'}
-  get '/error-507' => 'errors#error_507'
+  root to: 'welcome#index', defaults: {format: 'json'}
+  post '/posts', to: 'welcome#posts', defaults: {format: 'json'}
+  get '/welcome', to: 'welcome#show', defaults: {format: 'json'}
+  get '/welcome/non_json_text_response', to: 'welcome#non_json_text_response' #, defaults: {format: 'json'}
+  get '/welcome/non_json_binary_response', to: 'welcome#non_json_binary_response' #, defaults: {format: 'json'}
+  get '/array_of_elements', to: 'welcome#array_of_elements', defaults: {format: 'json'}
+  get '/upcase_first_name', to: 'welcome#upcase_first_name', defaults: {format: 'json'}
+  get '/ignore', to: 'welcome#ignore', defaults: {format: 'json'}
+  get '/ignore/non_json_text_response', to: 'welcome#non_json_text_response' # , defaults: {format: 'json'}
+  get '/ignore/non_json_binary_response', to: 'welcome#non_json_binary_response' #, defaults: {format: 'json'}
+  get '/error', to: 'errors#error', defaults: {format: 'json'}
+  get '/error-507', to: 'errors#error_507'
 end
