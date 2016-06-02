@@ -4,8 +4,7 @@ require "rspec/core/rake_task"
 RSpec::Core::RakeTask.new(:spec)
 
 RAILS_VERSIONS = [
-  "3.2.21",
-  "4.0.13"
+  "4.2.6"
 ]
 
 def run_tests_for_version(version)
@@ -16,7 +15,7 @@ def run_tests_for_version(version)
   commands << "bundle install"
   commands << "bundle exec rspec"
 
-  system({'RAILS_VERSION' => version}, commands.join(';'))
+  system({'RAILS_VERSION' => version}, commands.join(' && '))
 end
 
 task :all do
@@ -24,7 +23,7 @@ task :all do
     puts "Testing gem for rails version: #{version}"
     success = run_tests_for_version(version)
 
-    if not success
+    unless success
       puts "Test suite aborted, errors occured."
       exit($?.exitstatus)
     end
@@ -32,5 +31,5 @@ task :all do
 end
 
 task :default do
-  run_tests_for_version(ENV['RAILS_VERSION'] || '3.2.21')
+  run_tests_for_version(ENV['RAILS_VERSION'] || '4.2.6')
 end
