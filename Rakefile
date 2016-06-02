@@ -30,6 +30,8 @@ task :all do
   end
 end
 
-task :default do
-  run_tests_for_version(ENV['RAILS_VERSION'] || '4.2.6')
-end
+# task :default do
+#   run_tests_for_version(ENV['RAILS_VERSION'] || '4.2.6')
+# end
+
+task default: :spec
