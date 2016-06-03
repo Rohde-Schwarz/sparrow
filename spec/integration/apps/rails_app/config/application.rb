@@ -5,8 +5,8 @@ require "action_mailer/railtie"
 require "sprockets/railtie"
 
 Bundler.require(*Rails.groups)
-
-require 'sparrow'
+require File.expand_path("../../../../../../lib/sparrow", __FILE__)
+#require 'sparrow'
 
 Sparrow.configure do |config|
   config.excluded_routes = [
