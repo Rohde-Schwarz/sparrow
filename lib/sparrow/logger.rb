@@ -39,7 +39,7 @@ module Sparrow
     # @param [Boolean] enabled logging enabled
     def initialize(enabled)
       self.enabled = enabled
-      @logger = if defined?(Rails) then
+      @logger = if defined?(Rails)
                   Rails.logger
                 else
                   ::Logger.new(STDOUT)

@@ -9,7 +9,7 @@ describe "camel caser middleware for Rails", type: :rails do
       "DE"      => 'german'
     }
   end
-  let(:json) { MultiJson.dump(json_object) }
+  let(:json) { JSON.generate(json_object) }
 
     context "camel caser middleware for Rails with accept header " do
 
@@ -33,7 +33,7 @@ describe "camel caser middleware for Rails", type: :rails do
                                'CONTENT-TYPE'         => 'application/json',
                                'ACCEPT'               => 'text/html' }
 
-        last_json = MultiJson.load(last_response.body)
+        last_json = JSON.parse(last_response.body)
         expect(last_json['keys']).to include('userName')
         expect(last_json['keys']).to include('bar')
         expect(last_json['keys']).to include('DE')
@@ -46,7 +46,7 @@ describe "camel caser middleware for Rails", type: :rails do
                                'CONTENT-TYPE'         => 'application/json',
                                'ACCEPT'               => 'foo/bar, gate/protect' }
 
-        last_json = MultiJson.load(last_response.body)
+        last_json = JSON.parse(last_response.body)
         expect(last_json['keys']).to include('user_name')
         expect(last_json['keys']).to include('de')
       end

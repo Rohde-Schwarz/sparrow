@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "camel caser middleware", type: :rack do
 
   let(:json) do
-    MultiJson.dump({userName: "dsci", bar:{ lordFoo: 12 }})
+    JSON.generate({userName: "dsci", bar:{ lordFoo: 12 }})
   end
 
   context "accept header is given" do
@@ -14,7 +14,7 @@ describe "camel caser middleware", type: :rack do
     end
 
     subject do
-      MultiJson.load(last_response.body)
+      JSON.parse(last_response.body)
     end
 
     it "converts lower camelcase to underscore params" do
@@ -32,7 +32,7 @@ describe "camel caser middleware", type: :rack do
     end
 
     subject do
-      MultiJson.load(last_response.body)
+      JSON.parse(last_response.body)
     end
 
 

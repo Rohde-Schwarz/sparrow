@@ -29,7 +29,7 @@ module Sparrow
     # @see #exclude?
     # @see #excluded_routes
     def allow?(path)
-      not exclude?(path)
+      !exclude?(path)
     end
 
     ##

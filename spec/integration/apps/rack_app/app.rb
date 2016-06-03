@@ -3,7 +3,7 @@ class App
   def call(env)
     @env = env
     params = env["rack.input"].gets
-    @params = MultiJson.load(params || '{}')
+    @params = JSON.parse(params || '{}')
     header = {
       'Content-Type' => 'application/json',
       'Accept' => 'application/json'
@@ -36,7 +36,7 @@ class App
       end
       result
     end.flatten
-    MultiJson.dump({
+    JSON.generate({
                        keys: keys,
                        fakeKey: true,
                        fake_key: false
