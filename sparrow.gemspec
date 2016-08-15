@@ -1,6 +1,6 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
-rails_version = ENV["RAILS_VERSION"] || "4.2.6"
+rails_version = ENV["RAILS_VERSION"] || "4.2.7.1"
 ruby_version = File.open(File.join(__dir__, '.ruby-version')).read.chomp
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'sparrow/version'
@@ -25,7 +25,7 @@ supported.
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "activesupport", "<= 4.2.6"
+  spec.add_runtime_dependency "activesupport"
 
   spec.add_development_dependency "pry"
   spec.add_development_dependency "bundler", "~> 1.5"
