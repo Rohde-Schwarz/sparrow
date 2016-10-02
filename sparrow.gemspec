@@ -1,6 +1,6 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
-rails_version = ENV["RAILS_VERSION"] || "4.2.7.1"
+rails_version = ENV["RAILS_VERSION"] || "4.2"
 ruby_version = File.open(File.join(__dir__, '.ruby-version')).read.chomp
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'sparrow/version'
@@ -10,6 +10,7 @@ Gem::Specification.new do |spec|
   spec.version     = Sparrow::VERSION
   spec.authors     = ["Daniel Schmidt", "Andreas Müller"]
   spec.email       = ["dsci@code79.net", "anmuel86@gmail.com"]
+  spec.homepage    = "https://github.com/gateprotectGmbH/sparrow"
   spec.summary     = %q{A POC to have a Rack middleware parsing the params keys into underscore}
   spec.description = %q{
     A collection of 2 middlewares to convert json formats to other formats
